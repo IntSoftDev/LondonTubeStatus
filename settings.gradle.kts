@@ -2,6 +2,7 @@ rootProject.name = "LondonTubeStatus"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
+    @Suppress("UnstableApiUsage")
     repositories {
         google {
             mavenContent {
@@ -16,7 +17,9 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
+    @Suppress("UnstableApiUsage")
     repositories {
+        mavenLocal()
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
@@ -26,6 +29,13 @@ dependencyResolutionManagement {
         }
         mavenCentral()
     }
+
+    versionCatalogs {
+        create("isdlibs") {
+            from("com.intsoftdev:isddependencies:1.0.0-ALPHA-25")
+        }
+    }
 }
 
 include(":composeApp")
+include(":tflstatus")
