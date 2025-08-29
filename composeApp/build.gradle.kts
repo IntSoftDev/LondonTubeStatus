@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.implementation
+import org.gradle.kotlin.dsl.project
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -33,6 +35,7 @@ kotlin {
             implementation(isdlibs.androidx.compose.activity)
         }
         commonMain.dependencies {
+            implementation(project(":tflstatus"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
