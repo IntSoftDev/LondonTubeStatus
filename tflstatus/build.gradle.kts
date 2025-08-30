@@ -1,7 +1,52 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
+    alias(isdlibs.plugins.maven.publish)
     alias(isdlibs.plugins.kotlinMultiplatform)
     alias(isdlibs.plugins.android.kotlin.multiplatform.library)
     alias(isdlibs.plugins.androidLint)
+}
+
+group = "com.intsoftdev"
+version = "0.0.1"
+
+mavenPublishing {
+    // Define coordinates for the published artifact
+    coordinates(
+        groupId = group.toString(),
+        artifactId = "tflstatus",
+        version = version.toString()
+    )
+
+    // Configure POM metadata for the published artifact
+    pom {
+        name.set("NRStations KMP library")
+        description.set("Multiplatform SDK retrieve and show the current status of London Tube lines")
+        url.set("https://github.com/IntSoftDev/LondonTubeStatus")
+
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
+            }
+        }
+        developers {
+            developer {
+                id.set("azaka01")
+                name.set("A Zaka")
+                email.set("az@intsoftdev.com")
+            }
+        }
+        scm {
+            url.set("https://github.com/IntSoftDev/LondonTubeStatus")
+        }
+    }
+
+    // Configure publishing to Maven Central
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    // Enable GPG signing for all publications
+    signAllPublications()
 }
 
 kotlin {

@@ -10,6 +10,8 @@ plugins {
     alias(isdlibs.plugins.compose.compiler)
 }
 
+val importLocalKmp: String by project
+
 kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -35,7 +37,13 @@ kotlin {
             implementation(isdlibs.androidx.compose.activity)
         }
         commonMain.dependencies {
-            implementation(project(":tflstatus"))
+            // Import TFLStatus KMP as local dependency
+            if (importLocalKmp == "true") {
+                implementation(project(":tflstatus"))
+            } else {
+                // use build from Maven Central
+                implementation(isdlibs.intsoftdev.tfl)
+            }
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)

@@ -38,4 +38,9 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
-include(":tflstatus")
+
+val importLocalKmp: String by settings
+
+if (importLocalKmp == "true") {
+    include(":tflstatus")
+}
