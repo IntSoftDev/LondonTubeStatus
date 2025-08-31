@@ -14,3 +14,5 @@ This is a Kotlin Multiplatform project targeting Android, iOS.
 
 
 Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+
+Uses iOS direct integration rather than Pods or SPM - https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-direct-integration.html
