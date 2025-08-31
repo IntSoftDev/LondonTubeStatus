@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.implementation
+import org.gradle.kotlin.dsl.project
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -7,6 +9,8 @@ plugins {
     alias(isdlibs.plugins.composeMultiplatform)
     alias(isdlibs.plugins.compose.compiler)
 }
+
+val importLocalKmp: String by project
 
 kotlin {
     androidTarget {
@@ -33,6 +37,13 @@ kotlin {
             implementation(isdlibs.androidx.compose.activity)
         }
         commonMain.dependencies {
+            // Import TFLStatus KMP as local dependency
+            if (importLocalKmp == "true") {
+                implementation(project(":tflstatus"))
+            } else {
+                // use build from Maven Central
+                implementation(isdlibs.intsoftdev.tfl)
+            }
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)

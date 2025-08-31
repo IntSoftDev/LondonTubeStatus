@@ -1,4 +1,4 @@
-package com.intsoftdev.londontubestatus
+package com.intsoftdev.tflstatus
 
 class Greeting {
     private val platform = getPlatform()
