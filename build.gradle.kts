@@ -7,5 +7,4 @@ plugins {
     alias(isdlibs.plugins.kotlinMultiplatform) apply false
     alias(isdlibs.plugins.android.kotlin.multiplatform.library) apply false
     alias(isdlibs.plugins.androidLint) apply false
-    alias(isdlibs.plugins.cocoapods) apply false
 }
