@@ -20,7 +20,7 @@ mavenPublishing {
 
     // Configure POM metadata for the published artifact
     pom {
-        name.set("NRStations KMP library")
+        name.set("TFL Line Status KMP library")
         description.set("Multiplatform SDK retrieve and show the current status of London Tube lines")
         url.set("https://github.com/IntSoftDev/LondonTubeStatus")
 
