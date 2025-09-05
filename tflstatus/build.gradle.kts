@@ -5,6 +5,7 @@ plugins {
     alias(isdlibs.plugins.kotlinMultiplatform)
     alias(isdlibs.plugins.android.kotlin.multiplatform.library)
     alias(isdlibs.plugins.androidLint)
+    alias(isdlibs.plugins.kotlin.serialization)
 }
 
 group = "com.intsoftdev"
@@ -105,7 +106,14 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(isdlibs.kotlin.stdlib)
-                // Add KMP dependencies here
+                api(isdlibs.koin.core)
+                implementation(isdlibs.koin.compose)
+                implementation(isdlibs.koin.compose.viewmodel)
+                implementation(isdlibs.ktor.client.core)
+                implementation(isdlibs.bundles.ktor.common)
+                implementation(isdlibs.coroutines.core)
+                implementation(isdlibs.androidx.lifecycle.viewmodel)
+                implementation(isdlibs.kotlinx.serialization.json)
             }
         }
 
@@ -117,6 +125,9 @@ kotlin {
 
         androidMain {
             dependencies {
+                implementation(isdlibs.ktor.client.okHttp)
+                implementation(isdlibs.coroutines.android)
+                implementation(isdlibs.androidx.lifecycle.runtimeCompose)
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
@@ -133,6 +144,7 @@ kotlin {
 
         iosMain {
             dependencies {
+                implementation(isdlibs.ktor.client.ios)
                 // Add iOS-specific dependencies here. This a source set created by Kotlin Gradle
                 // Plugin (KGP) that each specific iOS target (e.g., iosX64) depends on as
                 // part of KMP’s default source set hierarchy. Note that this source set depends

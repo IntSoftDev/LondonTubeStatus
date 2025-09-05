@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.implementation
-import org.gradle.kotlin.dsl.project
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -35,6 +33,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(isdlibs.androidx.compose.activity)
+            implementation(isdlibs.koin.android)
         }
         commonMain.dependencies {
             // Import TFLStatus KMP as local dependency
@@ -42,7 +41,7 @@ kotlin {
                 implementation(project(":tflstatus"))
             } else {
                 // use build from Maven Central
-                implementation(isdlibs.intsoftdev.tfl)
+                implementation(isdlibs.intsoftdev.tflstatus)
             }
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -51,6 +50,9 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(isdlibs.androidx.lifecycle.runtimeCompose)
+            api(isdlibs.koin.core)
+            implementation(isdlibs.koin.compose)
+            implementation(isdlibs.koin.compose.viewmodel)
         }
         commonTest.dependencies {
             implementation(isdlibs.kotlin.test)
