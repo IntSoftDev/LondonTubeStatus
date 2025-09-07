@@ -112,6 +112,7 @@ kotlin {
                 implementation(project(":tflstatus"))
 
                 api(isdlibs.koin.core)
+                implementation(isdlibs.napier.logger)
                 // Compose Multiplatform UI
                 implementation(compose.runtime)
                 implementation(compose.foundation)

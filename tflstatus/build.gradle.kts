@@ -107,6 +107,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(isdlibs.kotlin.stdlib)
+                implementation(isdlibs.napier.logger)
                 api(isdlibs.koin.core)
                 implementation(isdlibs.koin.compose)
                 implementation(isdlibs.koin.compose.viewmodel)

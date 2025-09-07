@@ -11,14 +11,16 @@ import com.intsoftdev.tflstatus.ui.TubeLineCardSample
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 private val TflDarkScheme = darkColorScheme(
-    primary = Color(0xFF0078D4),
+    primary = Color(0xFF003366), // Dark blue for status bar
     secondary = Color(0xFF03DAC6),
     background = Color(0xFF121212),
-    surface = Color(0xFF1E1E1E),
+    surface = Color(0xFF003366), // Dark blue for top nav bar
+    surfaceContainer = Color(0xFF003366), // Dark blue for top nav bar container
+    surfaceContainerHigh = Color(0xFF003366), // Dark blue for elevated surfaces
     onPrimary = Color.White,
     onSecondary = Color.Black,
     onBackground = Color(0xFFE6E6E6),
-    onSurface = Color(0xFFE6E6E6)
+    onSurface = Color.White // White text on dark blue surface
 )
 
 @Composable

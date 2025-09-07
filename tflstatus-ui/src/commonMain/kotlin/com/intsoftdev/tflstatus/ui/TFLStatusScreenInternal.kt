@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,9 +40,18 @@ internal fun TFLStatusScreenInternal(
     viewModel: TubeStatusViewModel = koinInject(),
     showTitle: Boolean = true,
     title: String = "London Tube Status",
-    backgroundColor: Color = Color(0xFF26285F)
+    backgroundColor: Color
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    var isRefreshing by remember { mutableStateOf(false) }
+    var refreshCount by remember { mutableStateOf(0) }
+
+    // Handle pull-to-refresh - reset refreshing state when we get any non-loading state
+    LaunchedEffect(uiState, refreshCount) {
+        if (isRefreshing && uiState !is TubeStatusUiState.Loading) {
+            isRefreshing = false
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.getLineStatuses(TFL_LINE_IDS)
@@ -101,21 +111,29 @@ internal fun TFLStatusScreenInternal(
                         Text(
                             text = "Error loading tube status",
                             style = MaterialTheme.typography.headlineSmall,
-                            color = MaterialTheme.colorScheme.error
+                            color = MaterialTheme.colorScheme.error,
+                            textAlign = TextAlign.Center
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = currentState.message,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = MaterialTheme.colorScheme.onSurface,
+                            textAlign = TextAlign.Center
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(
                             onClick = {
                                 viewModel.getLineStatuses(TFL_LINE_IDS)
-                            }
+                            },
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            contentPadding = PaddingValues(horizontal = 32.dp, vertical = 12.dp)
                         ) {
-                            Text("Retry")
+                            Text(
+                                text = "Retry",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Medium
+                            )
                         }
                     }
                 }
@@ -128,13 +146,28 @@ internal fun TFLStatusScreenInternal(
                             style = MaterialTheme.typography.bodyLarge
                         )
                     } else {
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(20.dp)
+                        PullToRefreshBox(
+                            isRefreshing = isRefreshing,
+                            onRefresh = {
+                                isRefreshing = true
+                                refreshCount++
+                                viewModel.getLineStatuses(TFL_LINE_IDS)
+                            },
+                            modifier = Modifier.fillMaxSize()
                         ) {
-                            items(currentState.lineStatuses) { line ->
-                                TubeLineCard(line = line)
+                            LazyColumn(
+                                modifier = Modifier.fillMaxSize(),
+                                contentPadding = PaddingValues(
+                                    start = 16.dp,
+                                    top = 32.dp,
+                                    end = 16.dp,
+                                    bottom = 64.dp
+                                ),
+                                verticalArrangement = Arrangement.spacedBy(20.dp)
+                            ) {
+                                items(currentState.lineStatuses) { line ->
+                                    TubeLineCard(line = line)
+                                }
                             }
                         }
                     }

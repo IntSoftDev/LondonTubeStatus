@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(isdlibs.plugins.kotlinMultiplatform)
@@ -9,6 +10,17 @@ plugins {
 }
 
 val importLocalKmp: String by project
+
+// Load local.properties
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
+}
+
+// Get TFL API credentials from local.properties
+val tflAppId = localProperties.getProperty("tfl.app.id") ?: ""
+val tflAppKey = localProperties.getProperty("tfl.app.key") ?: ""
 
 kotlin {
     androidTarget {
@@ -54,6 +66,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(isdlibs.androidx.lifecycle.runtimeCompose)
+            implementation(isdlibs.napier.logger)
             api(isdlibs.koin.core)
             implementation(isdlibs.koin.compose)
             implementation(isdlibs.koin.compose.viewmodel)
@@ -74,6 +87,10 @@ android {
         targetSdk = isdlibs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+
+        // Add TFL API credentials to BuildConfig
+        buildConfigField("String", "TFL_APP_ID", "\"$tflAppId\"")
+        buildConfigField("String", "TFL_APP_KEY", "\"$tflAppKey\"")
     }
     packaging {
         resources {
@@ -88,6 +105,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 

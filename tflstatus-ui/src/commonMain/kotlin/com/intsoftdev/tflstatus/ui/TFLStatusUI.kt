@@ -25,7 +25,7 @@ fun TFLStatusUI(
     onBackPressed: (() -> Unit)? = null,
     showTitle: Boolean = false,
     title: String = "London Tube Status",
-    backgroundColor: Color = Color(0xFF26285F)
+    backgroundColor: Color = Blue600
 ) {
     TFLStatusScreen(
         modifier = modifier,
@@ -46,7 +46,7 @@ fun TFLStatusScreen(
     onBackPressed: (() -> Unit)? = null,
     showTitle: Boolean = true,
     title: String = "London Tube Status",
-    backgroundColor: Color = Color(0xFF26285F)
+    backgroundColor: Color
 ) {
     TFLStatusScreenContent(
         modifier = modifier,
@@ -67,7 +67,7 @@ fun TFLStatusScreenContent(
     onBackPressed: (() -> Unit)? = null,
     showTitle: Boolean = true,
     title: String = "London Tube Status",
-    backgroundColor: Color = Color(0xFF26285F)
+    backgroundColor: Color
 ) {
     TFLStatusScreenInternal(
         modifier = modifier,
