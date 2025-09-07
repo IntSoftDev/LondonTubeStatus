@@ -124,11 +124,11 @@ kotlin {
                 // Material Icons (needed for back button)
                 implementation(compose.materialIconsExtended)
 
-                implementation("org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose:2.8.2")
-                implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
+                implementation(isdlibs.androidx.lifecycle.runtimeCompose)
+                implementation(isdlibs.androidx.lifecycle.viewmodelCompose)
 
-                implementation("io.insert-koin:koin-compose:4.1.0-RC1")
-                implementation("io.insert-koin:koin-compose-viewmodel:4.1.0-RC1")
+                implementation(isdlibs.koin.compose)
+                implementation(isdlibs.koin.compose.viewmodel)
 
             }
         }
@@ -136,14 +136,14 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+                implementation(isdlibs.coroutines.test)
 
             }
         }
 
         androidMain {
             dependencies {
-                implementation("io.insert-koin:koin-android:4.1.0-RC1")
+                implementation(isdlibs.koin.android)
             }
         }
 
@@ -163,12 +163,12 @@ kotlin {
 
     cocoapods {
         summary = "TFL Status UI KMP Library"
-        homepage = "https://github.com/your-repo/TFLStatus-Ui" // Update with actual repo
-        version = "0.0.1" // Set appropriate version
-        ios.deploymentTarget = "17.0" // Match your minimum iOS version
+        homepage = "https://github.com/IntSoftDev/LondonTubeStatus"
+        version = "0.0.1"
+        ios.deploymentTarget = "17.0"
 
         framework {
-            baseName = "TFLStatusUi" // This will be the framework name
+            baseName = "TFLStatusUi"
             // Export any dependencies if needed
         }
     }

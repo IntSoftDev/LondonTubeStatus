@@ -159,9 +159,9 @@ kotlin {
 
     cocoapods {
         summary = "TFL Status UI KMP Library"
-        homepage = "https://github.com/your-repo/TFLStatus-Ui" // Update with actual repo
-        version = "0.0.1" // Set appropriate version
-        ios.deploymentTarget = "17.0" // Match your minimum iOS version
+        homepage = "https://github.com/IntSoftDev/LondonTubeStatus"
+        version = "0.0.1"
+        ios.deploymentTarget = "17.0"
 
         framework {
             baseName = "TFLStatus" // This will be the framework name
