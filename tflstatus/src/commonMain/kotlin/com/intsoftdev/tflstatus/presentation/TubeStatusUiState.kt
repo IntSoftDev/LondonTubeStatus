@@ -1,11 +1,13 @@
 package com.intsoftdev.tflstatus.presentation
 
-import com.intsoftdev.tflstatus.model.TFLStatusResponseItem
+import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusUiModel
 
 sealed interface TubeStatusUiState {
-    data class Error(val message: String) : TubeStatusUiState
     data object Loading : TubeStatusUiState
+    data class Error(val message: String) : TubeStatusUiState
     data class Success(
-        val lineStatuses: List<TFLStatusResponseItem>,
+        val tubeLines: List<TubeLineStatusUiModel>,
+        val lastUpdated: String? = null,
+        val hasDisruptions: Boolean = false
     ) : TubeStatusUiState
 }

@@ -6,7 +6,6 @@ import com.intsoftdev.tflstatus.network.TFLStatusAPI
 import com.intsoftdev.tflstatus.network.TFLStatusProxy
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
-import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger

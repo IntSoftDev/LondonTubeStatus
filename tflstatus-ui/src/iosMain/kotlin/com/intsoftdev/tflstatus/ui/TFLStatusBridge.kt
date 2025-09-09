@@ -5,18 +5,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
 import com.intsoftdev.tflstatus.TflApiConfig
 import com.intsoftdev.tflstatus.initTflSDK
+import com.intsoftdev.tflstatus.presentation.TubeLineColors.BackgroundColors.ContainerBackground
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.UIKit.UIViewController
 
 
 /**
  * Creates a ComposeUIViewController with custom configuration.
+ * Called from iOS to create the main view controller.
  *
  * @param showBackButton Whether to show the back button in the UI
  * @param onBackPressed Optional callback when back button is pressed
  * @return UIViewController containing the TFL Status screen
  */
 @OptIn(ExperimentalForeignApi::class)
+@Suppress("UNUSED_PARAMETER")
 fun createTFLStatusViewController(
     showBackButton: Boolean = true,
     onBackPressed: (() -> Unit)? = null,
@@ -35,7 +38,7 @@ fun createTFLStatusViewController(
             TFLStatusScreenContent(
                 modifier = Modifier.fillMaxSize(),
                 onBackPressed = null,
-                backgroundColor = Blue600
+                backgroundColor = ContainerBackground
             )
         }
     }
