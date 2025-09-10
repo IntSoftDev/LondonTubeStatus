@@ -1,13 +1,15 @@
 package com.intsoftdev.tflstatus.network.di
 
+import com.intsoftdev.tflstatus.TflApiConfig.Companion.APP_ID_KEY
+import com.intsoftdev.tflstatus.TflApiConfig.Companion.APP_KEY
 import com.intsoftdev.tflstatus.network.TFLStatusAPI
 import com.intsoftdev.tflstatus.network.TFLStatusProxy
-import com.intsoftdev.tflstatus.network.appId
-import com.intsoftdev.tflstatus.network.appKey
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -29,9 +31,13 @@ val networkModule = module {
             install(ContentNegotiation) {
                 json(get())
             }
-            install(HttpCache)
             install(Logging) {
-                level = LogLevel.ALL
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        Napier.d(tag = "HTTP") { message }
+                    }
+                }
+                level = LogLevel.INFO
             }
         }
     }
@@ -39,8 +45,8 @@ val networkModule = module {
     factory<TFLStatusAPI> {
         TFLStatusProxy(
             httpClient = get(named(HTTP_CLIENT)),
-            appId = appId,
-            appKey = appKey
+            appId = getPropertyOrNull(APP_ID_KEY),
+            appKey = getPropertyOrNull(APP_KEY)
         )
     }
 }

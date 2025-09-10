@@ -6,6 +6,8 @@ plugins {
     alias(isdlibs.plugins.android.kotlin.multiplatform.library)
     alias(isdlibs.plugins.androidLint)
     alias(isdlibs.plugins.kotlin.serialization)
+    alias(isdlibs.plugins.composeMultiplatform)
+    alias(isdlibs.plugins.compose.compiler)
     alias(isdlibs.plugins.cocoapods)
 }
 
@@ -16,13 +18,13 @@ mavenPublishing {
     // Define coordinates for the published artifact
     coordinates(
         groupId = group.toString(),
-        artifactId = "tflstatus",
+        artifactId = "tflstatus-ui",
         version = version.toString()
     )
 
     // Configure POM metadata for the published artifact
     pom {
-        name.set("TFL Line Status KMP library")
+        name.set("TFL Status UI Components")
         description.set("Multiplatform SDK retrieve and show the current status of London Tube lines")
         url.set("https://github.com/IntSoftDev/LondonTubeStatus")
 
@@ -78,7 +80,7 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "tflstatus"
+    val xcfName = "tflstatus-ui"
 
     iosX64 {
         binaries.framework {
@@ -106,34 +108,42 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(isdlibs.kotlin.stdlib)
-                implementation(isdlibs.napier.logger)
+                // Use local tflstatus project instead of published version
+                implementation(project(":tflstatus"))
+
                 api(isdlibs.koin.core)
+                implementation(isdlibs.napier.logger)
+                // Compose Multiplatform UI
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                implementation(compose.animation)
+
+                // Material Icons (needed for back button)
+                implementation(compose.materialIconsExtended)
+
+                implementation(isdlibs.androidx.lifecycle.runtimeCompose)
+                implementation(isdlibs.androidx.lifecycle.viewmodelCompose)
+
                 implementation(isdlibs.koin.compose)
                 implementation(isdlibs.koin.compose.viewmodel)
-                implementation(isdlibs.ktor.client.core)
-                implementation(isdlibs.bundles.ktor.common)
-                implementation(isdlibs.coroutines.core)
-                implementation(isdlibs.androidx.lifecycle.viewmodel)
-                implementation(isdlibs.kotlinx.serialization.json)
-                implementation(isdlibs.androidx.lifecycle.runtimeCompose)
+
             }
         }
 
         commonTest {
             dependencies {
-                implementation(isdlibs.kotlin.test)
+                implementation(kotlin("test"))
+                implementation(isdlibs.coroutines.test)
+
             }
         }
 
         androidMain {
             dependencies {
-                implementation(isdlibs.ktor.client.okHttp)
-                implementation(isdlibs.coroutines.android)
-                implementation(isdlibs.androidx.lifecycle.runtimeCompose)
-                // Add Android-specific dependencies here. Note that this source set depends on
-                // commonMain by default and will correctly pull the Android artifacts of any KMP
-                // dependencies declared in commonMain.
+                implementation(isdlibs.koin.android)
             }
         }
 
@@ -147,12 +157,6 @@ kotlin {
 
         iosMain {
             dependencies {
-                implementation(isdlibs.ktor.client.ios)
-                // Add iOS-specific dependencies here. This a source set created by Kotlin Gradle
-                // Plugin (KGP) that each specific iOS target (e.g., iosX64) depends on as
-                // part of KMP’s default source set hierarchy. Note that this source set depends
-                // on common by default and will correctly pull the iOS artifacts of any
-                // KMP dependencies declared in commonMain.
             }
         }
     }
@@ -164,7 +168,7 @@ kotlin {
         ios.deploymentTarget = "17.0"
 
         framework {
-            baseName = "TFLStatus" // This will be the framework name
+            baseName = "TFLStatusUi"
             // Export any dependencies if needed
         }
     }
