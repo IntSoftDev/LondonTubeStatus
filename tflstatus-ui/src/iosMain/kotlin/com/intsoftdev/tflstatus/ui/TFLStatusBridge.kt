@@ -12,11 +12,26 @@ import platform.UIKit.UIViewController
 
 /**
  * Creates a ComposeUIViewController with custom configuration.
- * Called from iOS to create the main view controller.
+ * Called from iOS to create the main view controller for displaying TFL Status information.
  *
- * @param showBackButton Whether to show the back button in the UI
- * @param onBackPressed Optional callback when back button is pressed
- * @return UIViewController containing the TFL Status screen
+ * @param showBackButton Whether to show the back button in the UI (default: true)
+ * @param onBackPressed Optional callback function invoked when back button is pressed
+ * @param enableLogging Whether to enable logging for the TFL SDK (default: true)
+ * @param apiConfig Configuration object for the TFL API (default: TflApiConfig())
+ * @return UIViewController containing the TFL Status screen with Compose UI
+ *
+ * @sample
+ * ```swift
+ * // From iOS Swift code:
+ * let viewController = TFLStatusBridgeKt.createTFLStatusViewController(
+ *     showBackButton: true,
+ *     onBackPressed: {
+ *         // Handle back button press
+ *     },
+ *     enableLogging: true,
+ *     apiConfig: TflApiConfig()
+ * )
+ * ```
  */
 @OptIn(ExperimentalForeignApi::class)
 @Suppress("UNUSED_PARAMETER")
