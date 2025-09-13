@@ -1,21 +1,44 @@
 package com.intsoftdev.tflstatus.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,11 +47,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.intsoftdev.tflstatus.model.TFLStatusResponseItem
-import com.intsoftdev.tflstatus.model.LineStatuse
+import com.intsoftdev.tflstatus.presentation.TubeLineConstants.TFL_LINE_IDS
 import com.intsoftdev.tflstatus.presentation.TubeStatusUiState
 import com.intsoftdev.tflstatus.presentation.TubeStatusViewModel
-import com.intsoftdev.tflstatus.presentation.TubeStatusViewModel.Companion.TFL_LINE_IDS
+import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusUiModel
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -139,7 +161,7 @@ internal fun TFLStatusScreenInternal(
                 }
 
                 is TubeStatusUiState.Success -> {
-                    if (currentState.lineStatuses.isEmpty()) {
+                    if (currentState.tubeLines.isEmpty()) {
                         Text(
                             text = "No tube lines found",
                             modifier = Modifier.align(Alignment.Center),
@@ -165,8 +187,20 @@ internal fun TFLStatusScreenInternal(
                                 ),
                                 verticalArrangement = Arrangement.spacedBy(20.dp)
                             ) {
-                                items(currentState.lineStatuses) { line ->
-                                    TubeLineCard(line = line)
+                                currentState.lastUpdated?.let { timestamp ->
+                                    item {
+                                        Text(
+                                            text = "Last updated: $timestamp",
+                                            style = MaterialTheme.typography.headlineSmall,
+                                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                                            modifier = Modifier.fillMaxWidth(),
+                                            textAlign = TextAlign.Center
+                                        )
+                                    }
+                                }
+
+                                items(currentState.tubeLines, key = { it.id }) { tubeLineUiModel ->
+                                    TubeLineCard(tubeLineUiModel = tubeLineUiModel)
                                 }
                             }
                         }
@@ -179,14 +213,10 @@ internal fun TFLStatusScreenInternal(
 
 @Composable
 internal fun TubeLineCard(
-    line: TFLStatusResponseItem,
+    tubeLineUiModel: TubeLineStatusUiModel,
     modifier: Modifier = Modifier
 ) {
     var isExpanded by remember { mutableStateOf(false) }
-    val lineColorInfo = getTFLLineColors(line.name.lowercase())
-
-    val hasDisruptionReason = line.lineStatuses.isNotEmpty() &&
-            line.lineStatuses.first().reason.isNotEmpty()
 
     Card(
         modifier = modifier
@@ -194,7 +224,7 @@ internal fun TubeLineCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(24.dp), // More rounded like the screenshot
         colors = CardDefaults.cardColors(
-            containerColor = lineColorInfo.backgroundColor
+            containerColor = tubeLineUiModel.backgroundColor
         )
     ) {
         Column(
@@ -209,11 +239,11 @@ internal fun TubeLineCard(
             ) {
                 // Line name - larger and bold like screenshot
                 Text(
-                    text = line.name,
+                    text = tubeLineUiModel.displayName,
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Medium,
-                    color = lineColorInfo.textColor,
+                    color = tubeLineUiModel.textColor,
                     textAlign = TextAlign.Start
                 )
 
@@ -222,18 +252,14 @@ internal fun TubeLineCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = if (line.lineStatuses.isNotEmpty()) {
-                            line.lineStatuses.first().statusSeverityDescription.ifEmpty { "Unknown" }
-                        } else {
-                            "No status information"
-                        },
+                        text = tubeLineUiModel.statusText,
                         style = MaterialTheme.typography.titleSmall,
-                        color = lineColorInfo.textColor,
+                        color = tubeLineUiModel.textColor,
                         fontWeight = FontWeight.Medium,
                         textAlign = TextAlign.End
                     )
 
-                    if (hasDisruptionReason) {
+                    if (tubeLineUiModel.hasDisruption) {
                         Spacer(modifier = Modifier.width(8.dp))
                         IconButton(
                             onClick = { isExpanded = !isExpanded },
@@ -242,7 +268,7 @@ internal fun TubeLineCard(
                             Icon(
                                 imageVector = if (isExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                                 contentDescription = if (isExpanded) "Collapse disruption details" else "Expand disruption details",
-                                tint = lineColorInfo.textColor
+                                tint = tubeLineUiModel.textColor
                             )
                         }
                     }
@@ -250,320 +276,20 @@ internal fun TubeLineCard(
             }
 
             // Expandable disruption reason
-            if (hasDisruptionReason) {
-                AnimatedVisibility(
-                    visible = isExpanded,
-                    enter = expandVertically() + fadeIn(),
-                    exit = shrinkVertically() + fadeOut()
-                ) {
+            tubeLineUiModel.disruptionReason?.let { reason ->
+                AnimatedVisibility(visible = isExpanded) {
                     Text(
-                        text = line.lineStatuses.first().reason,
+                        text = reason,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 16.dp),
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Medium,
-                        color = lineColorInfo.textColor.copy(alpha = 0.9f),
+                        color = tubeLineUiModel.textColor.copy(alpha = 0.9f),
                         textAlign = TextAlign.Center,
                     )
                 }
             }
         }
     }
-}
-
-internal data class TFLLineColorInfo(
-    val backgroundColor: Color,
-    val textColor: Color
-)
-
-@Composable
-internal fun getTFLLineColors(lineName: String): TFLLineColorInfo {
-    return when (lineName) {
-        "bakerloo" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFFB36305),
-            textColor = Color.White
-        )
-
-        "circle" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFFFFD300),
-            textColor = Color.Black
-        )
-
-        "central" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFFE32017),
-            textColor = Color.White
-        )
-
-        "district" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFF00782A),
-            textColor = Color.White
-        )
-
-        "elizabeth line" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFF6950A1),
-            textColor = Color.White
-        )
-
-        "hammersmith & city" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFFF3A9BB),
-            textColor = Color.Black
-        )
-
-        "jubilee" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFF7A7A7A),
-            textColor = Color.White
-        )
-
-        "metropolitan" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFF9B0056),
-            textColor = Color.White
-        )
-
-        "northern" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFF000000),
-            textColor = Color.White
-        )
-
-        "piccadilly" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFF003688),
-            textColor = Color.White
-        )
-
-        "victoria" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFF0098D4),
-            textColor = Color.White
-        )
-
-        "waterloo & city" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFF95CDBA),
-            textColor = Color.Black
-        )
-
-        "london overground" -> TFLLineColorInfo(
-            backgroundColor = Color(0xFFE86A10),
-            textColor = Color.White
-        )
-
-        else -> TFLLineColorInfo(
-            backgroundColor = MaterialTheme.colorScheme.surface,
-            textColor = MaterialTheme.colorScheme.onSurface
-        )
-    }
-}
-
-/**
- * Sample composables for testing and development.
- * These can be used in your app's preview functions.
- */
-
-@Composable
-fun TubeLineCardSample() {
-    MaterialTheme {
-        Column(
-            modifier = Modifier
-                .background(Color(0xFF1A1A2E))
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            TubeLineCard(
-                line = TFLStatusResponseItem(
-                    id = "bakerloo",
-                    name = "Bakerloo",
-                    lineStatuses = listOf(
-                        LineStatuse(
-                            statusSeverity = 10,
-                            statusSeverityDescription = "Good Service",
-                            reason = ""
-                        )
-                    )
-                )
-            )
-
-            TubeLineCard(
-                line = TFLStatusResponseItem(
-                    id = "central",
-                    name = "Central",
-                    lineStatuses = listOf(
-                        LineStatuse(
-                            statusSeverity = 6,
-                            statusSeverityDescription = "Part Closure",
-                            reason = "Part closure between Liverpool Street and Leytonstone due to planned engineering work. Use alternative routes."
-                        )
-                    )
-                )
-            )
-
-            TubeLineCard(
-                line = TFLStatusResponseItem(
-                    id = "jubilee",
-                    name = "Jubilee",
-                    lineStatuses = listOf(
-                        LineStatuse(
-                            statusSeverity = 9,
-                            statusSeverityDescription = "Severe Delays",
-                            reason = "Severe delays due to an earlier signal failure at Bond Street. Tickets are being accepted on local bus services."
-                        )
-                    )
-                )
-            )
-        }
-    }
-}
-
-@Composable
-fun TFLStatusSample() {
-    MaterialTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xFF1A1A2E))
-        ) {
-            LazyColumn(
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(getSampleTubeLines()) { line ->
-                    TubeLineCard(line = line)
-                }
-            }
-        }
-    }
-}
-
-internal fun getSampleTubeLines(): List<TFLStatusResponseItem> {
-    return listOf(
-        TFLStatusResponseItem(
-            id = "bakerloo",
-            name = "Bakerloo",
-            lineStatuses = listOf(
-                LineStatuse(
-                    statusSeverity = 10,
-                    statusSeverityDescription = "Good Service",
-                    reason = ""
-                )
-            )
-        ),
-        TFLStatusResponseItem(
-            id = "central",
-            name = "Central",
-            lineStatuses = listOf(
-                LineStatuse(
-                    statusSeverity = 6,
-                    statusSeverityDescription = "Part Closure",
-                    reason = "Part closure between Liverpool Street and Leytonstone due to planned engineering work. Use alternative routes."
-                )
-            )
-        ),
-        TFLStatusResponseItem(
-            id = "circle",
-            name = "Circle",
-            lineStatuses = listOf(
-                LineStatuse(
-                    statusSeverity = 10,
-                    statusSeverityDescription = "Good Service",
-                    reason = ""
-                )
-            )
-        ),
-        TFLStatusResponseItem(
-            id = "district",
-            name = "District",
-            lineStatuses = listOf(
-                LineStatuse(
-                    statusSeverity = 10,
-                    statusSeverityDescription = "Good Service",
-                    reason = ""
-                )
-            )
-        ),
-        TFLStatusResponseItem(
-            id = "elizabeth",
-            name = "Elizabeth line",
-            lineStatuses = listOf(
-                LineStatuse(
-                    statusSeverity = 10,
-                    statusSeverityDescription = "Good Service",
-                    reason = ""
-                )
-            )
-        ),
-        TFLStatusResponseItem(
-            id = "hammersmith-city",
-            name = "Hammersmith & City",
-            lineStatuses = listOf(
-                LineStatuse(
-                    statusSeverity = 10,
-                    statusSeverityDescription = "Good Service",
-                    reason = ""
-                )
-            )
-        ),
-        TFLStatusResponseItem(
-            id = "jubilee",
-            name = "Jubilee",
-            lineStatuses = listOf(
-                LineStatuse(
-                    statusSeverity = 9,
-                    statusSeverityDescription = "Severe Delays",
-                    reason = "Severe delays due to an earlier signal failure at Bond Street. Tickets are being accepted on local bus services."
-                )
-            )
-        ),
-        TFLStatusResponseItem(
-            id = "metropolitan",
-            name = "Metropolitan",
-            lineStatuses = listOf(
-                LineStatuse(
-                    statusSeverity = 10,
-                    statusSeverityDescription = "Good Service",
-                    reason = ""
-                )
-            )
-        ),
-        TFLStatusResponseItem(
-            id = "northern",
-            name = "Northern",
-            lineStatuses = listOf(
-                LineStatuse(
-                    statusSeverity = 10,
-                    statusSeverityDescription = "Good Service",
-                    reason = ""
-                )
-            )
-        ),
-        TFLStatusResponseItem(
-            id = "piccadilly",
-            name = "Piccadilly",
-            lineStatuses = listOf(
-                LineStatuse(
-                    statusSeverity = 8,
-                    statusSeverityDescription = "Minor Delays",
-                    reason = "Minor delays due to train cancellations. Allow extra time for your journey."
-                )
-            )
-        ),
-        TFLStatusResponseItem(
-            id = "victoria",
-            name = "Victoria",
-            lineStatuses = listOf(
-                LineStatuse(
-                    statusSeverity = 10,
-                    statusSeverityDescription = "Good Service",
-                    reason = ""
-                )
-            )
-        ),
-        TFLStatusResponseItem(
-            id = "waterloo-city",
-            name = "Waterloo & City",
-            lineStatuses = listOf(
-                LineStatuse(
-                    statusSeverity = 4,
-                    statusSeverityDescription = "Planned Closure",
-                    reason = "Closed Saturday and Sunday. The line operates Monday to Friday only, usually from 06:20 to 21:30."
-                )
-            )
-        )
-    )
 }

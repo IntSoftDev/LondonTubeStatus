@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.intsoftdev.tflstatus.ui.TFLStatusSample
 import com.intsoftdev.tflstatus.ui.TFLStatusUI
-import com.intsoftdev.tflstatus.ui.TubeLineCardSample
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 private val TflDarkScheme = darkColorScheme(
@@ -48,13 +47,6 @@ fun TFLApp() {
 
 @Preview
 @Composable
-fun MyFullTFLPreview() {
+fun TFLPreview() {
     TFLStatusSample()
-}
-
-@Preview
-@Composable
-fun MyTFLPreview() {
-    // Use the sample composables from the library
-    TubeLineCardSample()
 }

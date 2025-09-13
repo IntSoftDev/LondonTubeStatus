@@ -3,6 +3,7 @@ package com.intsoftdev.tflstatus.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.intsoftdev.tflstatus.domain.GetTFLStatusUseCase
+import com.intsoftdev.tflstatus.presentation.mapper.toUiModels
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -59,11 +60,19 @@ class TubeStatusViewModel(private val usecase: GetTFLStatusUseCase) : ViewModel(
 
     fun getLineStatuses(lineIds: String) {
         Napier.d(tag = TAG) { "getLineStatuses: $lineIds" }
-        _uiState.value = TubeStatusUiState.Loading // Set to loading state immediately
+        _uiState.value = TubeStatusUiState.Loading
         viewModelScope.launch(exceptionHandler) {
             val result = usecase(lineIds)
             _uiState.value = result.fold(
-                onSuccess = { list -> TubeStatusUiState.Success(lineStatuses = list) },
+                onSuccess = { responseList ->
+                    val uiModels = responseList.toUiModels()
+                    TubeStatusUiState.Success(
+                        tubeLines = uiModels,
+                        // add lastUpdated text if needed to surface in UI
+                        hasDisruptions = uiModels.any { it.hasDisruption }
+                    )
+                },
+
                 onFailure = { err ->
                     TubeStatusUiState.Error(
                         message = getUserFriendlyErrorMessage(
@@ -76,7 +85,6 @@ class TubeStatusViewModel(private val usecase: GetTFLStatusUseCase) : ViewModel(
     }
 
     companion object {
-        const val TFL_LINE_IDS = "victoria,circle,piccadilly,bakerloo,central,metropolitan,district,waterloo-city,hammersmith-city,jubilee,northern,elizabeth"
         private const val TAG = "TubeStatusViewModel"
     }
 }

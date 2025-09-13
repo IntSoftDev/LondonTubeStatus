@@ -3,10 +3,11 @@ package com.intsoftdev.tflstatus.ui
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.intsoftdev.tflstatus.presentation.TubeLineColors.BackgroundColors.ContainerBackground
 
 /**
  * Main entry point for TFL Status UI that can be called from any app menu.
- * This assumes Koin is already initialized in the parent app with TFL Status modules.
+ * This assumes Koin is already initialised in the parent app with TFL Status modules.
  *
  * Usage:
  * ```
@@ -25,7 +26,7 @@ fun TFLStatusUI(
     onBackPressed: (() -> Unit)? = null,
     showTitle: Boolean = false,
     title: String = "London Tube Status",
-    backgroundColor: Color = Blue600
+    backgroundColor: Color = ContainerBackground
 ) {
     TFLStatusScreen(
         modifier = modifier,
@@ -36,12 +37,8 @@ fun TFLStatusUI(
     )
 }
 
-/**
- * Alternative entry point that assumes Koin is already initialized in the parent app.
- * Use this if your app already has Koin set up.
- */
 @Composable
-fun TFLStatusScreen(
+private fun TFLStatusScreen(
     modifier: Modifier = Modifier,
     onBackPressed: (() -> Unit)? = null,
     showTitle: Boolean = true,
@@ -58,7 +55,7 @@ fun TFLStatusScreen(
 }
 
 /**
- * For apps that want to customize the theme, this provides just the content
+ * For apps that want to customise the theme, this provides just the content
  * without MaterialTheme wrapper.
  */
 @Composable
