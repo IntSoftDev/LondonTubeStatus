@@ -34,7 +34,7 @@ import platform.UIKit.UIViewController
  * ```
  */
 @OptIn(ExperimentalForeignApi::class)
-@Suppress("UNUSED_PARAMETER")
+@Suppress("unused")
 fun createTFLStatusViewController(
     showBackButton: Boolean = true,
     onBackPressed: (() -> Unit)? = null,

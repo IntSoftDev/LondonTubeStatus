@@ -68,7 +68,7 @@ class TubeStatusViewModel(private val usecase: GetTFLStatusUseCase) : ViewModel(
                     val uiModels = responseList.toUiModels()
                     TubeStatusUiState.Success(
                         tubeLines = uiModels,
-                        // add lastUpdated text if need to surface in UI
+                        // add lastUpdated text if needed to surface in UI
                         hasDisruptions = uiModels.any { it.hasDisruption }
                     )
                 },
@@ -82,10 +82,6 @@ class TubeStatusViewModel(private val usecase: GetTFLStatusUseCase) : ViewModel(
                 }
             )
         }
-    }
-
-    private fun getCurrentTimestamp(): String {
-        return "Just now" // Simplified for brevity; implement actual timestamp formatting as needed
     }
 
     companion object {
