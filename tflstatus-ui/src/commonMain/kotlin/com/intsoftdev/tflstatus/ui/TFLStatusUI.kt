@@ -1,6 +1,6 @@
 package com.intsoftdev.tflstatus.ui
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.intsoftdev.tflstatus.presentation.TubeLineColors.BackgroundColors.ContainerBackground
@@ -21,36 +21,36 @@ import com.intsoftdev.tflstatus.presentation.TubeLineColors.BackgroundColors.Con
  * ```
  */
 @Composable
-fun TFLStatusUI(
+fun tflStatusUI(
     modifier: Modifier = Modifier,
     onBackPressed: (() -> Unit)? = null,
     showTitle: Boolean = false,
     title: String = "London Tube Status",
-    backgroundColor: Color = ContainerBackground
+    backgroundColor: Color = ContainerBackground,
 ) {
-    TFLStatusScreen(
+    tflStatusScreen(
         modifier = modifier,
         onBackPressed = onBackPressed,
         showTitle = showTitle,
         title = title,
-        backgroundColor = backgroundColor
+        backgroundColor = backgroundColor,
     )
 }
 
 @Composable
-private fun TFLStatusScreen(
+private fun tflStatusScreen(
     modifier: Modifier = Modifier,
     onBackPressed: (() -> Unit)? = null,
     showTitle: Boolean = true,
     title: String = "London Tube Status",
-    backgroundColor: Color
+    backgroundColor: Color,
 ) {
-    TFLStatusScreenContent(
+    tflStatusScreenContent(
         modifier = modifier,
         onBackPressed = onBackPressed,
         showTitle = showTitle,
         title = title,
-        backgroundColor = backgroundColor
+        backgroundColor = backgroundColor,
     )
 }
 
@@ -59,19 +59,19 @@ private fun TFLStatusScreen(
  * without MaterialTheme wrapper.
  */
 @Composable
-fun TFLStatusScreenContent(
+fun tflStatusScreenContent(
     modifier: Modifier = Modifier,
     onBackPressed: (() -> Unit)? = null,
     showTitle: Boolean = true,
     title: String = "London Tube Status",
-    backgroundColor: Color
+    backgroundColor: Color,
 ) {
-    TFLStatusScreenInternal(
+    tflStatusScreenInternal(
         modifier = modifier,
         showBackButton = onBackPressed != null,
         onBackPressed = onBackPressed ?: {},
         showTitle = showTitle,
         title = title,
-        backgroundColor = backgroundColor
+        backgroundColor = backgroundColor,
     )
 }

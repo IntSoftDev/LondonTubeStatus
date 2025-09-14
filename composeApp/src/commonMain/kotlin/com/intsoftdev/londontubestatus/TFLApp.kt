@@ -5,48 +5,52 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.intsoftdev.tflstatus.ui.TFLStatusSample
-import com.intsoftdev.tflstatus.ui.TFLStatusUI
+import com.intsoftdev.tflstatus.ui.tflStatusSample
+import com.intsoftdev.tflstatus.ui.tflStatusUI
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-private val TflDarkScheme = darkColorScheme(
-    primary = Color(0xFF003366), // Dark blue for status bar
-    secondary = Color(0xFF03DAC6),
-    background = Color(0xFF121212),
-    surface = Color(0xFF003366), // Dark blue for top nav bar
-    surfaceContainer = Color(0xFF003366), // Dark blue for top nav bar container
-    surfaceContainerHigh = Color(0xFF003366), // Dark blue for elevated surfaces
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color(0xFFE6E6E6),
-    onSurface = Color.White // White text on dark blue surface
-)
+private val TflDarkScheme =
+    darkColorScheme(
+        primary = Color(0xFF003366),
+        secondary = Color(0xFF03DAC6),
+        background = Color(0xFF121212),
+        surface = Color(0xFF003366),
+        surfaceContainer = Color(0xFF003366),
+        surfaceContainerHigh = Color(0xFF003366),
+        onPrimary = Color.White,
+        onSecondary = Color.Black,
+        onBackground = Color(0xFFE6E6E6),
+        onSurface = Color.White,
+    )
 
+@Suppress("ComposableNaming")
 @Composable
-fun TFLTheme(
+fun tflTheme(
     darkTheme: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     MaterialTheme(
         colorScheme = if (darkTheme) TflDarkScheme else lightColorScheme(),
         typography = androidx.compose.material3.Typography(),
-        content = content
+        content = content,
     )
 }
 
+@Suppress("ComposableNaming")
 @Composable
-fun TFLApp() {
-    TFLTheme(darkTheme = true)  {
-        TFLStatusUI(
+fun tflApp() {
+    tflTheme(darkTheme = true) {
+        tflStatusUI(
             showTitle = true,
             title = "London Tube Status",
-            onBackPressed = null // No back button needed for main screen
+            onBackPressed = null,
         )
     }
 }
 
+@Suppress("ComposableNaming")
 @Preview
 @Composable
-fun TFLPreview() {
-    TFLStatusSample()
+fun tflPreview() {
+    tflStatusSample()
 }

@@ -15,39 +15,41 @@ import kotlinx.serialization.json.Json
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val networkModule = module {
-    single {
-        Json {
-            ignoreUnknownKeys = true
-            isLenient = true
-            explicitNulls = false
-            prettyPrint = true
-        }
-    }
-
-    single(named(HTTP_CLIENT)) {
-        HttpClient {
-            install(ContentNegotiation) {
-                json(get())
+val networkModule =
+    module {
+        single {
+            Json {
+                ignoreUnknownKeys = true
+                isLenient = true
+                explicitNulls = false
+                prettyPrint = true
             }
-            install(Logging) {
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        Napier.d(tag = "HTTP") { message }
-                    }
+        }
+
+        single(named(HTTP_CLIENT)) {
+            HttpClient {
+                install(ContentNegotiation) {
+                    json(get())
                 }
-                level = LogLevel.INFO
+                install(Logging) {
+                    logger =
+                        object : Logger {
+                            override fun log(message: String) {
+                                Napier.d(tag = "HTTP") { message }
+                            }
+                        }
+                    level = LogLevel.INFO
+                }
             }
         }
-    }
 
-    factory<TFLStatusAPI> {
-        TFLStatusProxy(
-            httpClient = get(named(HTTP_CLIENT)),
-            appId = getPropertyOrNull(APP_ID_KEY),
-            appKey = getPropertyOrNull(APP_KEY)
-        )
+        factory<TFLStatusAPI> {
+            TFLStatusProxy(
+                httpClient = get(named(HTTP_CLIENT)),
+                appId = getPropertyOrNull(APP_ID_KEY),
+                appKey = getPropertyOrNull(APP_KEY),
+            )
+        }
     }
-}
 
 internal const val HTTP_CLIENT = "TflStatusHttpClient"

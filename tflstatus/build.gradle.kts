@@ -1,4 +1,5 @@
 import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
     alias(isdlibs.plugins.maven.publish)
@@ -17,7 +18,7 @@ mavenPublishing {
     coordinates(
         groupId = group.toString(),
         artifactId = "tflstatus",
-        version = version.toString()
+        version = version.toString(),
     )
 
     // Configure POM metadata for the published artifact
@@ -44,8 +45,8 @@ mavenPublishing {
         }
     }
 
-    // Configure publishing to Maven Central
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    // Configure publishing to Maven Central (manual mode for debugging)
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = false)
 
     // Enable GPG signing for all publications
     signAllPublications()
@@ -79,22 +80,14 @@ kotlin {
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
     val xcfName = "tflstatus"
-
-    iosX64 {
-        binaries.framework {
+    listOf(
+        iosArm64(),
+        iosSimulatorArm64(),
+        // add iosX64 if Intel simulator needed
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
             baseName = xcfName
-        }
-    }
-
-    iosArm64 {
-        binaries.framework {
-            baseName = xcfName
-        }
-    }
-
-    iosSimulatorArm64 {
-        binaries.framework {
-            baseName = xcfName
+            isStatic = true
         }
     }
 
@@ -164,8 +157,8 @@ kotlin {
         ios.deploymentTarget = "17.0"
 
         framework {
-            baseName = "TFLStatus" // This will be the framework name
-            // Export any dependencies if needed
+            baseName = "TFLStatus"
+            isStatic = true
         }
     }
 }

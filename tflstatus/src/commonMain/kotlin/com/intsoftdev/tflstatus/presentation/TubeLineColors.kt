@@ -19,7 +19,6 @@ import com.intsoftdev.tflstatus.presentation.TubeLineConstants.WATERLOO_CITY_ID
  * Centralized colors for London Tube lines following TfL's official color scheme
  */
 object TubeLineColors {
-
     // Text colors
     object TextColors {
         val White = Color.White
@@ -55,7 +54,7 @@ object TubeLineColors {
      */
     data class LineColorScheme(
         val backgroundColor: Color,
-        val textColor: Color
+        val textColor: Color,
     )
 
     /**
@@ -67,29 +66,33 @@ object TubeLineColors {
             CIRCLE_ID -> LineColorScheme(LineColors.Circle, TextColors.Black)
             CENTRAL_ID -> LineColorScheme(LineColors.Central, TextColors.White)
             DISTRICT_ID -> LineColorScheme(LineColors.District, TextColors.White)
-            ELIZABETH_ID, "elizabeth line" -> LineColorScheme(
-                LineColors.ElizabethLine,
-                TextColors.White
-            )
+            ELIZABETH_ID, "elizabeth line" ->
+                LineColorScheme(
+                    LineColors.ElizabethLine,
+                    TextColors.White,
+                )
 
-            HAMMERSMITH_CITY_ID, "hammersmith & city" -> LineColorScheme(
-                LineColors.HammersmithCity,
-                TextColors.Black
-            )
+            HAMMERSMITH_CITY_ID, "hammersmith & city" ->
+                LineColorScheme(
+                    LineColors.HammersmithCity,
+                    TextColors.Black,
+                )
             JUBILEE_ID -> LineColorScheme(LineColors.Jubilee, TextColors.White)
             METROPOLITAN_ID -> LineColorScheme(LineColors.Metropolitan, TextColors.White)
             NORTHERN_ID -> LineColorScheme(LineColors.Northern, TextColors.White)
             PICCADILLY_ID -> LineColorScheme(LineColors.Piccadilly, TextColors.White)
             VICTORIA_ID -> LineColorScheme(LineColors.Victoria, TextColors.White)
-            WATERLOO_CITY_ID, "waterloo & city" -> LineColorScheme(
-                LineColors.WaterlooCity,
-                TextColors.Black
-            )
+            WATERLOO_CITY_ID, "waterloo & city" ->
+                LineColorScheme(
+                    LineColors.WaterlooCity,
+                    TextColors.Black,
+                )
 
-            LONDON_OVERGROUND_ID, "london overground" -> LineColorScheme(
-                LineColors.LondonOverground,
-                TextColors.White
-            )
+            LONDON_OVERGROUND_ID, "london overground" ->
+                LineColorScheme(
+                    LineColors.LondonOverground,
+                    TextColors.White,
+                )
             else -> LineColorScheme(LineColors.Default, TextColors.White)
         }
     }

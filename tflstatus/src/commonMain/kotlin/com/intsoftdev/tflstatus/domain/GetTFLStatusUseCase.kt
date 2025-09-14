@@ -5,7 +5,7 @@ import com.intsoftdev.tflstatus.model.TFLStatusResponseItem
 import io.github.aakira.napier.Napier
 
 class GetTFLStatusUseCase(
-    private val tflServicesRepository: TFLServicesRepository
+    private val tflServicesRepository: TFLServicesRepository,
 ) {
     suspend operator fun invoke(lines: String): Result<List<TFLStatusResponseItem>> {
         return try {

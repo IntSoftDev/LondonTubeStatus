@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -23,5 +22,5 @@ data class LineStatuse(
     @SerialName("statusSeverityDescription")
     val statusSeverityDescription: String = "",
     @SerialName("validityPeriods")
-    val validityPeriods: List<ValidityPeriod> = listOf()
+    val validityPeriods: List<ValidityPeriod> = listOf(),
 )

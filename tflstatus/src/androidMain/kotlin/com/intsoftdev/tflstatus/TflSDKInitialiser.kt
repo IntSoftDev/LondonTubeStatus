@@ -52,7 +52,7 @@ fun initTflSDK(
     context: android.content.Context,
     koinApplication: KoinApplication? = null,
     enableLogging: Boolean = true,
-    apiConfig: TflApiConfig = TflApiConfig()
+    apiConfig: TflApiConfig = TflApiConfig(),
 ) {
     if (enableLogging) {
         Napier.base(DebugAntilog())

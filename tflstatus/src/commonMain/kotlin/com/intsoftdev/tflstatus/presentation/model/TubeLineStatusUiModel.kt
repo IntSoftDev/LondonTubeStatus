@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.presentation.model
 
-
 import androidx.compose.ui.graphics.Color
 
 data class TubeLineStatusUiModel(
@@ -11,7 +10,7 @@ data class TubeLineStatusUiModel(
     val disruptionReason: String?,
     val backgroundColor: Color,
     val textColor: Color,
-    val hasDisruption: Boolean
+    val hasDisruption: Boolean,
 ) {
     enum class StatusSeverity(val displayOrder: Int) {
         GOOD_SERVICE(1),
@@ -20,6 +19,6 @@ data class TubeLineStatusUiModel(
         PART_CLOSURE(4),
         PLANNED_CLOSURE(5),
         SERVICE_CLOSED(6),
-        UNKNOWN(99)
+        UNKNOWN(99),
     }
 }

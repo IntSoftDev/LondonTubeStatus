@@ -9,7 +9,6 @@ import com.intsoftdev.tflstatus.presentation.TubeLineColors.BackgroundColors.Con
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.UIKit.UIViewController
 
-
 /**
  * Creates a ComposeUIViewController with custom configuration.
  * Called from iOS to create the main view controller for displaying TFL Status information.
@@ -44,16 +43,16 @@ fun createTFLStatusViewController(
     initTflSDK(enableLogging, apiConfig)
     return ComposeUIViewController {
         if (showBackButton && onBackPressed != null) {
-            TFLStatusUI(
+            tflStatusUI(
                 modifier = Modifier.fillMaxSize(),
-                onBackPressed = onBackPressed
+                onBackPressed = onBackPressed,
             )
         } else {
             // Use the screen content without back button
-            TFLStatusScreenContent(
+            tflStatusScreenContent(
                 modifier = Modifier.fillMaxSize(),
                 onBackPressed = null,
-                backgroundColor = ContainerBackground
+                backgroundColor = ContainerBackground,
             )
         }
     }

@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -27,5 +26,5 @@ data class Disruption(
     @SerialName("summary")
     val summary: String = "",
     @SerialName("type")
-    val type: String = ""
+    val type: String = "",
 )

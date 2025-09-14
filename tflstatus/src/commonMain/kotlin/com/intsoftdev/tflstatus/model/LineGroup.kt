@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,5 +10,5 @@ data class LineGroup(
     @SerialName("naptanIdReference")
     val naptanIdReference: String = "",
     @SerialName("stationAtcoCode")
-    val stationAtcoCode: String = ""
+    val stationAtcoCode: String = "",
 )

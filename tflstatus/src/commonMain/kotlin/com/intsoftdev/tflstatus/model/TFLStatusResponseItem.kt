@@ -24,5 +24,5 @@ data class TFLStatusResponseItem(
     @SerialName("routeSections")
     val routeSections: List<RouteSection> = listOf(),
     @SerialName("serviceTypes")
-    val serviceTypes: List<ServiceType> = listOf()
+    val serviceTypes: List<ServiceType> = listOf(),
 )

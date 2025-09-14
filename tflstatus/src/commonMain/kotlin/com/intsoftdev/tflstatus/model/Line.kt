@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -21,5 +20,5 @@ data class Line(
     @SerialName("type")
     val type: String = "",
     @SerialName("uri")
-    val uri: String = ""
+    val uri: String = "",
 )

@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
  * @param onBackPressed Callback when back button is pressed
  */
 @Composable
-fun TFLStatusUIWithDependencies(
+fun tflStatusUIWithDependencies(
     modifier: Modifier = Modifier,
     onBackPressed: (() -> Unit)? = null,
     // You would need to add the specific dependencies here
@@ -23,9 +23,9 @@ fun TFLStatusUIWithDependencies(
 ) {
     // This would create a ViewModel manually with provided dependencies
     // For now, falls back to the standard approach
-    TFLStatusUI(
+    tflStatusUI(
         modifier = modifier,
-        onBackPressed = onBackPressed
+        onBackPressed = onBackPressed,
     )
 }
 
@@ -33,7 +33,6 @@ fun TFLStatusUIWithDependencies(
  * Extension function to help with integration setup.
  */
 object TFLStatusUIHelper {
-
     /**
      * Instructions for setting up TFL Status UI in your app.
      */

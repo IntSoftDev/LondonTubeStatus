@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -31,5 +30,5 @@ data class AffectedRoute(
     @SerialName("validTo")
     val validTo: String = "",
     @SerialName("via")
-    val via: Via = Via()
+    val via: Via = Via(),
 )

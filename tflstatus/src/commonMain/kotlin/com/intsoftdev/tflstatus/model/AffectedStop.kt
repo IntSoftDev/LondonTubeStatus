@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -59,5 +58,5 @@ data class AffectedStop(
     @SerialName("stopType")
     val stopType: String = "",
     @SerialName("url")
-    val url: String = ""
+    val url: String = "",
 )
