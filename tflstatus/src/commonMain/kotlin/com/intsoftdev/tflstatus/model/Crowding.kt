@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -9,5 +8,5 @@ data class Crowding(
     @SerialName("passengerFlows")
     val passengerFlows: List<PassengerFlow> = listOf(),
     @SerialName("trainLoadings")
-    val trainLoadings: List<TrainLoading> = listOf()
+    val trainLoadings: List<TrainLoading> = listOf(),
 )

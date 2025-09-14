@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -15,5 +14,5 @@ data class AdditionalProperty(
     @SerialName("sourceSystemKey")
     val sourceSystemKey: String = "",
     @SerialName("value")
-    val value: String = ""
+    val value: String = "",
 )

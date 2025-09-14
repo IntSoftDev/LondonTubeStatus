@@ -13,10 +13,11 @@ class TFLStatusApplication : Application() {
         val appKey = BuildConfig.TFL_APP_KEY
 
         if (appId.isNotEmpty() && appKey.isNotEmpty()) {
-            val tflApiConfig = TflApiConfig(
-                appId = appId,
-                appKey = appKey
-            )
+            val tflApiConfig =
+                TflApiConfig(
+                    appId = appId,
+                    appKey = appKey,
+                )
             initTflSDK(context = applicationContext, apiConfig = tflApiConfig)
         } else {
             initTflSDK(context = applicationContext)

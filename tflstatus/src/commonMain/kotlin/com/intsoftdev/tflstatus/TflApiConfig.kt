@@ -5,7 +5,7 @@ import com.intsoftdev.tflstatus.TflApiConfig.Companion.APP_KEY
 
 data class TflApiConfig(
     val appId: String? = null,
-    val appKey: String? = null
+    val appKey: String? = null,
 ) {
     companion object {
         const val APP_ID_KEY = "APP_ID_KEY"
@@ -16,5 +16,5 @@ data class TflApiConfig(
 internal fun TflApiConfig.toKoinProperties(): Map<String, Any> =
     listOfNotNull(
         this.appId?.let { APP_ID_KEY to it },
-        this.appKey?.let { APP_KEY to it }
+        this.appKey?.let { APP_KEY to it },
     ).toMap()

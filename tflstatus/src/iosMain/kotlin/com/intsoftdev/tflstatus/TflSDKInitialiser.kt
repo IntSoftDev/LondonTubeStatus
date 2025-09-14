@@ -48,7 +48,7 @@ private var sdkInitialised = false
  */
 fun initTflSDK(
     enableLogging: Boolean = true,
-    apiConfig: TflApiConfig = TflApiConfig()
+    apiConfig: TflApiConfig = TflApiConfig(),
 ) {
     if (!sdkInitialised) {
         if (enableLogging) {

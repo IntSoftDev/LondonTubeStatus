@@ -17,7 +17,7 @@ fun TFLStatusResponseItem.toUiModel(): TubeLineStatusUiModel {
         disruptionReason = getDisruptionReason(),
         backgroundColor = colorScheme.backgroundColor,
         textColor = colorScheme.textColor,
-        hasDisruption = hasDisruptionReason()
+        hasDisruption = hasDisruptionReason(),
     )
 }
 
@@ -33,20 +33,21 @@ private fun TFLStatusResponseItem.getStatusInfo(): StatusInfo {
         status.statusSeverityDescription.isEmpty() -> StatusInfo("Unknown", StatusSeverity.UNKNOWN)
         else -> {
             val text = status.statusSeverityDescription
-            val severity = when (status.statusSeverity) {
-                10 -> StatusSeverity.GOOD_SERVICE
-                9 -> StatusSeverity.MINOR_DELAYS
-                8 -> StatusSeverity.MINOR_DELAYS
-                7 -> StatusSeverity.SEVERE_DELAYS
-                6 -> StatusSeverity.PART_CLOSURE
-                5 -> StatusSeverity.PART_CLOSURE
-                4 -> StatusSeverity.PLANNED_CLOSURE
-                3 -> StatusSeverity.SERVICE_CLOSED
-                2 -> StatusSeverity.SERVICE_CLOSED
-                1 -> StatusSeverity.SERVICE_CLOSED
-                0 -> StatusSeverity.SERVICE_CLOSED
-                else -> StatusSeverity.UNKNOWN
-            }
+            val severity =
+                when (status.statusSeverity) {
+                    10 -> StatusSeverity.GOOD_SERVICE
+                    9 -> StatusSeverity.MINOR_DELAYS
+                    8 -> StatusSeverity.MINOR_DELAYS
+                    7 -> StatusSeverity.SEVERE_DELAYS
+                    6 -> StatusSeverity.PART_CLOSURE
+                    5 -> StatusSeverity.PART_CLOSURE
+                    4 -> StatusSeverity.PLANNED_CLOSURE
+                    3 -> StatusSeverity.SERVICE_CLOSED
+                    2 -> StatusSeverity.SERVICE_CLOSED
+                    1 -> StatusSeverity.SERVICE_CLOSED
+                    0 -> StatusSeverity.SERVICE_CLOSED
+                    else -> StatusSeverity.UNKNOWN
+                }
             StatusInfo(text, severity)
         }
     }
@@ -66,13 +67,14 @@ private fun String.formatDisplayName(): String {
         "london overground" -> "London Overground"
         "hammersmith & city" -> "Hammersmith & City"
         "waterloo & city" -> "Waterloo & City"
-        else -> this.split(" ").joinToString(" ") { word ->
-            word.replaceFirstChar { it.uppercase() }
-        }
+        else ->
+            this.split(" ").joinToString(" ") { word ->
+                word.replaceFirstChar { it.uppercase() }
+            }
     }
 }
 
 private data class StatusInfo(
     val text: String,
-    val severity: StatusSeverity
+    val severity: StatusSeverity,
 )

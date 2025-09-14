@@ -143,7 +143,31 @@ struct ContentView: View {
    ./gradlew :composeApp:assembleDebug
    ```
 
-### Project Structure
+## Fast Development Commands
+
+For faster builds during development:
+
+```bash
+# Fast Android-only build (skips iOS frameworks)
+./gradlew compileDebugKotlinAndroid assembleDebug -x podDebugFramework
+
+# Quick tests (Android + common)
+./gradlew testDebugUnitTest -x compileKotlinIos*
+
+# Fast lint check
+./gradlew lintDebug -x podDebugFramework
+
+# Build libraries only (Android)
+./gradlew :tflstatus:compileKotlinAndroid :tflstatus-ui:compileKotlinAndroid
+
+# Full build (when you need iOS)
+./gradlew build
+
+# Clean build cache (if builds are acting strange)
+./gradlew clean
+```
+
+## Project Structure
 
 ```
 LondonTubeStatus/

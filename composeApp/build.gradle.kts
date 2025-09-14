@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.util.Properties
 
 plugins {
     alias(isdlibs.plugins.kotlinMultiplatform)
@@ -11,16 +10,9 @@ plugins {
 
 val importLocalKmp: String by project
 
-// Load local.properties
-val localProperties = Properties()
-val localPropertiesFile = rootProject.file("local.properties")
-if (localPropertiesFile.exists()) {
-    localProperties.load(localPropertiesFile.inputStream())
-}
-
-// Get TFL API credentials from local.properties
-val tflAppId = localProperties.getProperty("tfl.app.id") ?: ""
-val tflAppKey = localProperties.getProperty("tfl.app.key") ?: ""
+// Get TFL API credentials from root project properties (loaded from secrets.properties)
+val tflAppId = rootProject.findProperty("tfl.app.id")?.toString() ?: ""
+val tflAppKey = rootProject.findProperty("tfl.app.key")?.toString() ?: ""
 
 kotlin {
     androidTarget {
@@ -31,9 +23,9 @@ kotlin {
     }
 
     listOf(
-        iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
+        // iosX64() not needed
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
@@ -114,4 +106,3 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
 }
-

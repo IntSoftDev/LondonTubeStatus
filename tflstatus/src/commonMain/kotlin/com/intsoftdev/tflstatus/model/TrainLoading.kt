@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -19,5 +18,5 @@ data class TrainLoading(
     @SerialName("timeSlice")
     val timeSlice: String = "",
     @SerialName("value")
-    val value: Int = 0
+    val value: Int = 0,
 )

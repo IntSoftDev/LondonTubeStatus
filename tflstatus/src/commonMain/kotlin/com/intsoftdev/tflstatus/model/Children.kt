@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -25,5 +24,5 @@ data class Children(
     @SerialName("placeType")
     val placeType: String = "",
     @SerialName("url")
-    val url: String = ""
+    val url: String = "",
 )

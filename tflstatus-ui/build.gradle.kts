@@ -19,7 +19,7 @@ mavenPublishing {
     coordinates(
         groupId = group.toString(),
         artifactId = "tflstatus-ui",
-        version = version.toString()
+        version = version.toString(),
     )
 
     // Configure POM metadata for the published artifact
@@ -46,8 +46,8 @@ mavenPublishing {
         }
     }
 
-    // Configure publishing to Maven Central
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    // Configure publishing to Maven Central (manual mode for debugging)
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = false)
 
     // Enable GPG signing for all publications
     signAllPublications()
@@ -59,7 +59,7 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "com.intsoftdev.tflstatus"
+        namespace = "com.intsoftdev.tflstatus-ui"
         compileSdk = isdlibs.versions.compileSdk.get().toInt()
         minSdk = isdlibs.versions.minSdk.get().toInt()
 
@@ -82,21 +82,14 @@ kotlin {
     // https://developer.android.com/kotlin/multiplatform/migrate
     val xcfName = "tflstatus-ui"
 
-    iosX64 {
-        binaries.framework {
+    listOf(
+        iosArm64(),
+        iosSimulatorArm64(),
+        // add iosX64 if Intel simulator needed
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
             baseName = xcfName
-        }
-    }
-
-    iosArm64 {
-        binaries.framework {
-            baseName = xcfName
-        }
-    }
-
-    iosSimulatorArm64 {
-        binaries.framework {
-            baseName = xcfName
+            isStatic = true
         }
     }
 
@@ -129,7 +122,6 @@ kotlin {
 
                 implementation(isdlibs.koin.compose)
                 implementation(isdlibs.koin.compose.viewmodel)
-
             }
         }
 
@@ -137,7 +129,6 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(isdlibs.coroutines.test)
-
             }
         }
 
@@ -169,7 +160,7 @@ kotlin {
 
         framework {
             baseName = "TFLStatusUi"
-            // Export any dependencies if needed
+            isStatic = true
         }
     }
 }

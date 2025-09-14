@@ -21,19 +21,20 @@ import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusUiModel
  */
 
 @Composable
-fun TFLStatusSample() {
+fun tflStatusSample() {
     MaterialTheme {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(TubeLineColors.BackgroundColors.SampleBackground)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(TubeLineColors.BackgroundColors.SampleBackground),
         ) {
             LazyColumn(
                 contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 items(getSampleTubeLineUiModels()) { tubeLineUiModel ->
-                    TubeLineCard(tubeLineUiModel = tubeLineUiModel)
+                    tubeLineCard(tubeLineUiModel = tubeLineUiModel)
                 }
             }
         }
@@ -50,17 +51,19 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.Bakerloo,
             textColor = TubeLineColors.TextColors.White,
-            hasDisruption = false
+            hasDisruption = false,
         ),
         TubeLineStatusUiModel(
             id = TubeLineConstants.CENTRAL_ID,
             displayName = "Central",
             statusText = "Part Closure",
             statusSeverity = TubeLineStatusUiModel.StatusSeverity.PART_CLOSURE,
-            disruptionReason = "Part closure between Liverpool Street and Leytonstone due to planned engineering work. Use alternative routes.",
+            disruptionReason =
+                "Part closure between Liverpool Street and Leytonstone due to planned engineering work. " +
+                    "Use alternative routes.",
             backgroundColor = TubeLineColors.LineColors.Central,
             textColor = TubeLineColors.TextColors.White,
-            hasDisruption = true
+            hasDisruption = true,
         ),
         TubeLineStatusUiModel(
             id = TubeLineConstants.CIRCLE_ID,
@@ -70,7 +73,7 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.Circle,
             textColor = TubeLineColors.TextColors.Black,
-            hasDisruption = false
+            hasDisruption = false,
         ),
         TubeLineStatusUiModel(
             id = TubeLineConstants.DISTRICT_ID,
@@ -80,7 +83,7 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.District,
             textColor = TubeLineColors.TextColors.White,
-            hasDisruption = false
+            hasDisruption = false,
         ),
         TubeLineStatusUiModel(
             id = TubeLineConstants.ELIZABETH_ID,
@@ -90,7 +93,7 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.ElizabethLine,
             textColor = TubeLineColors.TextColors.White,
-            hasDisruption = false
+            hasDisruption = false,
         ),
         TubeLineStatusUiModel(
             id = TubeLineConstants.HAMMERSMITH_CITY_ID,
@@ -100,17 +103,19 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.HammersmithCity,
             textColor = TubeLineColors.TextColors.Black,
-            hasDisruption = false
+            hasDisruption = false,
         ),
         TubeLineStatusUiModel(
             id = TubeLineConstants.JUBILEE_ID,
             displayName = "Jubilee",
             statusText = "Severe Delays",
             statusSeverity = TubeLineStatusUiModel.StatusSeverity.SEVERE_DELAYS,
-            disruptionReason = "Severe delays due to an earlier signal failure at Bond Street. Tickets are being accepted on local bus services.",
+            disruptionReason =
+                "Severe delays due to an earlier signal failure at Bond Street. " +
+                    "Tickets are being accepted on local bus services.",
             backgroundColor = TubeLineColors.LineColors.Jubilee,
             textColor = TubeLineColors.TextColors.White,
-            hasDisruption = true
+            hasDisruption = true,
         ),
         TubeLineStatusUiModel(
             id = TubeLineConstants.METROPOLITAN_ID,
@@ -120,7 +125,7 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.Metropolitan,
             textColor = TubeLineColors.TextColors.White,
-            hasDisruption = false
+            hasDisruption = false,
         ),
         TubeLineStatusUiModel(
             id = TubeLineConstants.NORTHERN_ID,
@@ -130,7 +135,7 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.Northern,
             textColor = TubeLineColors.TextColors.White,
-            hasDisruption = false
+            hasDisruption = false,
         ),
         TubeLineStatusUiModel(
             id = TubeLineConstants.PICCADILLY_ID,
@@ -140,7 +145,7 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             disruptionReason = "Minor delays due to train cancellations. Allow extra time for your journey.",
             backgroundColor = TubeLineColors.LineColors.Piccadilly,
             textColor = TubeLineColors.TextColors.White,
-            hasDisruption = true
+            hasDisruption = true,
         ),
         TubeLineStatusUiModel(
             id = TubeLineConstants.VICTORIA_ID,
@@ -150,7 +155,7 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.Victoria,
             textColor = TubeLineColors.TextColors.White,
-            hasDisruption = false
+            hasDisruption = false,
         ),
         TubeLineStatusUiModel(
             id = TubeLineConstants.WATERLOO_CITY_ID,
@@ -160,7 +165,7 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             disruptionReason = "Closed Saturday and Sunday. The line operates Monday to Friday only, usually from 06:20 to 21:30.",
             backgroundColor = TubeLineColors.LineColors.WaterlooCity,
             textColor = TubeLineColors.TextColors.Black,
-            hasDisruption = true
-        )
+            hasDisruption = true,
+        ),
     )
 }

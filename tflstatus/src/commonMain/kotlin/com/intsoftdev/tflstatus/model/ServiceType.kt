@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -9,5 +8,5 @@ data class ServiceType(
     @SerialName("name")
     val name: String = "",
     @SerialName("uri")
-    val uri: String = ""
+    val uri: String = "",
 )

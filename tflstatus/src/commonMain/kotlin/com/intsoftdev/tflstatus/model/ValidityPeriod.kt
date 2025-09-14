@@ -1,6 +1,5 @@
 package com.intsoftdev.tflstatus.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,5 +10,5 @@ data class ValidityPeriod(
     @SerialName("isNow")
     val isNow: Boolean = false,
     @SerialName("toDate")
-    val toDate: String = ""
+    val toDate: String = "",
 )
