@@ -160,7 +160,7 @@ kotlin {
 
         framework {
             baseName = "TFLStatusUi"
-            isStatic = true
+            isStatic = false
         }
     }
 }
