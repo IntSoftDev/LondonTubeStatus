@@ -42,6 +42,6 @@ include(":composeApp")
 val importLocalKmp: String by settings
 
 if (importLocalKmp == "true") {
-    include(":tflstatus")
+    include(":tflstatus-core")
     include(":tflstatus-ui")
 }

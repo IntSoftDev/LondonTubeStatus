@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.intsoftdev"
-version = "0.0.1"
+version = "0.0.2"
 
 mavenPublishing {
     // Define coordinates for the published artifact
@@ -59,7 +59,7 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "com.intsoftdev.tflstatus-ui"
+        namespace = "com.intsoftdev.tflstatusui"
         compileSdk = isdlibs.versions.compileSdk.get().toInt()
         minSdk = isdlibs.versions.minSdk.get().toInt()
 
@@ -80,7 +80,7 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "tflstatus-ui"
+    val xcfName = "tflstatusui"
 
     listOf(
         iosArm64(),
@@ -102,7 +102,7 @@ kotlin {
         commonMain {
             dependencies {
                 // Use local tflstatus project instead of published version
-                implementation(project(":tflstatus"))
+                implementation(project(":tflstatus-core"))
 
                 api(isdlibs.koin.core)
                 implementation(isdlibs.napier.logger)
@@ -155,11 +155,11 @@ kotlin {
     cocoapods {
         summary = "TFL Status UI KMP Library"
         homepage = "https://github.com/IntSoftDev/LondonTubeStatus"
-        version = "0.0.1"
+        version = "0.0.2"
         ios.deploymentTarget = "17.0"
 
         framework {
-            baseName = "TFLStatusUi"
+            baseName = "tflstatusui"
             isStatic = false
         }
     }
