@@ -43,11 +43,11 @@ kotlin {
             // TFL Status library dependencies
             if (importLocalKmp == "true") {
                 // Use local project modules
-                implementation(project(":tflstatus"))
+                implementation(project(":tflstatus-core"))
                 implementation(project(":tflstatus-ui"))
             } else {
                 // Use published UI library (includes core library automatically)
-                implementation(isdlibs.intsoftdev.tflstatus)
+                implementation(isdlibs.intsoftdev.tflstatus.core)
                 implementation(isdlibs.intsoftdev.tflstatus.ui)
             }
 

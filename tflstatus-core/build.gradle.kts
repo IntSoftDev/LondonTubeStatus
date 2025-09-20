@@ -10,20 +10,20 @@ plugins {
 }
 
 group = "com.intsoftdev"
-version = "0.0.1"
+version = "0.0.2"
 
 mavenPublishing {
     // Define coordinates for the published artifact
     coordinates(
         groupId = group.toString(),
-        artifactId = "tflstatus",
+        artifactId = "tflstatus-core",
         version = version.toString(),
     )
 
     // Configure POM metadata for the published artifact
     pom {
-        name.set("TFL Line Status KMP library")
-        description.set("Multiplatform SDK retrieve and show the current status of London Tube lines")
+        name.set("TFL Line Status KMP library Core")
+        description.set("Multiplatform SDK to retrieve the current status of London Tube lines")
         url.set("https://github.com/IntSoftDev/LondonTubeStatus")
 
         licenses {
@@ -57,7 +57,7 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "com.intsoftdev.tflstatus"
+        namespace = "com.intsoftdev.tflstatuscore"
         compileSdk = isdlibs.versions.compileSdk.get().toInt()
         minSdk = isdlibs.versions.minSdk.get().toInt()
 
@@ -78,7 +78,7 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "tflstatus"
+    val xcfName = "tflstatuscore"
     listOf(
         iosArm64(),
         iosSimulatorArm64(),
@@ -150,13 +150,13 @@ kotlin {
     }
 
     cocoapods {
-        summary = "TFL Status UI KMP Library"
+        summary = "TFL Status Core KMP Library"
         homepage = "https://github.com/IntSoftDev/LondonTubeStatus"
-        version = "0.0.1"
+        version = "0.0.2"
         ios.deploymentTarget = "17.0"
 
         framework {
-            baseName = "TFLStatus"
+            baseName = "tflstatuscore"
             isStatic = true
         }
     }

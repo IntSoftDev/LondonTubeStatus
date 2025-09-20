@@ -1,20 +1,20 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'tflstatus_ui'
-    spec.version                  = '0.0.1'
+    spec.version                  = '0.0.2'
     spec.homepage                 = 'https://github.com/IntSoftDev/LondonTubeStatus'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
     spec.license                  = ''
     spec.summary                  = 'TFL Status UI KMP Library'
-    spec.vendored_frameworks      = 'build/cocoapods/framework/TFLStatusUi.framework'
+    spec.vendored_frameworks      = 'build/cocoapods/framework/tflstatusui.framework'
     spec.libraries                = 'c++'
     spec.ios.deployment_target    = '17.0'
                 
                 
-    if !Dir.exist?('build/cocoapods/framework/TFLStatusUi.framework') || Dir.empty?('build/cocoapods/framework/TFLStatusUi.framework')
+    if !Dir.exist?('build/cocoapods/framework/tflstatusui.framework') || Dir.empty?('build/cocoapods/framework/tflstatusui.framework')
         raise "
 
-        Kotlin framework 'TFLStatusUi' doesn't exist yet, so a proper Xcode project can't be generated.
+        Kotlin framework 'tflstatusui' doesn't exist yet, so a proper Xcode project can't be generated.
         'pod install' should be executed after running ':generateDummyFramework' Gradle task:
 
             ./gradlew :tflstatus-ui:generateDummyFramework
@@ -28,7 +28,7 @@ Pod::Spec.new do |spec|
                 
     spec.pod_target_xcconfig = {
         'KOTLIN_PROJECT_PATH' => ':tflstatus-ui',
-        'PRODUCT_MODULE_NAME' => 'TFLStatusUi',
+        'PRODUCT_MODULE_NAME' => 'tflstatusui',
     }
                 
     spec.script_phases = [

@@ -1,23 +1,23 @@
 Pod::Spec.new do |spec|
-    spec.name                     = 'tflstatus'
-    spec.version                  = '0.0.1'
+    spec.name                     = 'tflstatus_core'
+    spec.version                  = '0.0.2'
     spec.homepage                 = 'https://github.com/IntSoftDev/LondonTubeStatus'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
     spec.license                  = ''
-    spec.summary                  = 'TFL Status UI KMP Library'
-    spec.vendored_frameworks      = 'build/cocoapods/framework/TFLStatus.framework'
+    spec.summary                  = 'TFL Status Core KMP Library'
+    spec.vendored_frameworks      = 'build/cocoapods/framework/tflstatuscore.framework'
     spec.libraries                = 'c++'
     spec.ios.deployment_target    = '17.0'
                 
                 
-    if !Dir.exist?('build/cocoapods/framework/TFLStatus.framework') || Dir.empty?('build/cocoapods/framework/TFLStatus.framework')
+    if !Dir.exist?('build/cocoapods/framework/tflstatuscore.framework') || Dir.empty?('build/cocoapods/framework/tflstatuscore.framework')
         raise "
 
-        Kotlin framework 'TFLStatus' doesn't exist yet, so a proper Xcode project can't be generated.
+        Kotlin framework 'tflstatuscore' doesn't exist yet, so a proper Xcode project can't be generated.
         'pod install' should be executed after running ':generateDummyFramework' Gradle task:
 
-            ./gradlew :tflstatus:generateDummyFramework
+            ./gradlew :tflstatus-core:generateDummyFramework
 
         Alternatively, proper pod installation is performed during Gradle sync in the IDE (if Podfile location is set)"
     end
@@ -27,13 +27,13 @@ Pod::Spec.new do |spec|
     }
                 
     spec.pod_target_xcconfig = {
-        'KOTLIN_PROJECT_PATH' => ':tflstatus',
-        'PRODUCT_MODULE_NAME' => 'TFLStatus',
+        'KOTLIN_PROJECT_PATH' => ':tflstatus-core',
+        'PRODUCT_MODULE_NAME' => 'tflstatuscore',
     }
                 
     spec.script_phases = [
         {
-            :name => 'Build tflstatus',
+            :name => 'Build tflstatus_core',
             :execution_position => :before_compile,
             :shell_path => '/bin/sh',
             :script => <<-SCRIPT
