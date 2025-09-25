@@ -1,4 +1,4 @@
-package com.intsoftdev.tflstatus.ui
+package com.intsoftdev.tflstatus.ui.mocks
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,9 +11,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.intsoftdev.tflstatus.presentation.TubeLineColors
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants
-import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusUiModel
+import com.intsoftdev.tflstatus.presentation.TFLLineConstants
+import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusSeverity
+import com.intsoftdev.tflstatus.ui.TubeLineCard
+import com.intsoftdev.tflstatus.ui.constants.TubeLineColors
+import com.intsoftdev.tflstatus.ui.model.TubeLineStatusUiModel
 
 /**
  * Sample composable for testing and development.
@@ -21,7 +23,7 @@ import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusUiModel
  */
 
 @Composable
-fun tflStatusSample() {
+fun TflStatusSample() {
     MaterialTheme {
         Box(
             modifier =
@@ -34,7 +36,7 @@ fun tflStatusSample() {
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 items(getSampleTubeLineUiModels()) { tubeLineUiModel ->
-                    tubeLineCard(tubeLineUiModel = tubeLineUiModel)
+                    TubeLineCard(tubeLineUiModel = tubeLineUiModel)
                 }
             }
         }
@@ -44,124 +46,124 @@ fun tflStatusSample() {
 internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
     return listOf(
         TubeLineStatusUiModel(
-            id = TubeLineConstants.BAKERLOO_ID,
+            id = TFLLineConstants.BAKERLOO_ID,
             displayName = "Bakerloo",
             statusText = "Good Service",
-            statusSeverity = TubeLineStatusUiModel.StatusSeverity.GOOD_SERVICE,
+            statusSeverity = TubeLineStatusSeverity.GOOD_SERVICE,
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.Bakerloo,
             textColor = TubeLineColors.TextColors.White,
             hasDisruption = false,
         ),
         TubeLineStatusUiModel(
-            id = TubeLineConstants.CENTRAL_ID,
+            id = TFLLineConstants.CENTRAL_ID,
             displayName = "Central",
             statusText = "Part Closure",
-            statusSeverity = TubeLineStatusUiModel.StatusSeverity.PART_CLOSURE,
+            statusSeverity = TubeLineStatusSeverity.PART_CLOSURE,
             disruptionReason =
                 "Part closure between Liverpool Street and Leytonstone due to planned engineering work. " +
-                    "Use alternative routes.",
+                        "Use alternative routes.",
             backgroundColor = TubeLineColors.LineColors.Central,
             textColor = TubeLineColors.TextColors.White,
             hasDisruption = true,
         ),
         TubeLineStatusUiModel(
-            id = TubeLineConstants.CIRCLE_ID,
+            id = TFLLineConstants.CIRCLE_ID,
             displayName = "Circle",
             statusText = "Good Service",
-            statusSeverity = TubeLineStatusUiModel.StatusSeverity.GOOD_SERVICE,
+            statusSeverity = TubeLineStatusSeverity.GOOD_SERVICE,
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.Circle,
             textColor = TubeLineColors.TextColors.Black,
             hasDisruption = false,
         ),
         TubeLineStatusUiModel(
-            id = TubeLineConstants.DISTRICT_ID,
+            id = TFLLineConstants.DISTRICT_ID,
             displayName = "District",
             statusText = "Good Service",
-            statusSeverity = TubeLineStatusUiModel.StatusSeverity.GOOD_SERVICE,
+            statusSeverity = TubeLineStatusSeverity.GOOD_SERVICE,
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.District,
             textColor = TubeLineColors.TextColors.White,
             hasDisruption = false,
         ),
         TubeLineStatusUiModel(
-            id = TubeLineConstants.ELIZABETH_ID,
+            id = TFLLineConstants.ELIZABETH_ID,
             displayName = "Elizabeth line",
             statusText = "Good Service",
-            statusSeverity = TubeLineStatusUiModel.StatusSeverity.GOOD_SERVICE,
+            statusSeverity = TubeLineStatusSeverity.GOOD_SERVICE,
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.ElizabethLine,
             textColor = TubeLineColors.TextColors.White,
             hasDisruption = false,
         ),
         TubeLineStatusUiModel(
-            id = TubeLineConstants.HAMMERSMITH_CITY_ID,
+            id = TFLLineConstants.HAMMERSMITH_CITY_ID,
             displayName = "Hammersmith & City",
             statusText = "Good Service",
-            statusSeverity = TubeLineStatusUiModel.StatusSeverity.GOOD_SERVICE,
+            statusSeverity = TubeLineStatusSeverity.GOOD_SERVICE,
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.HammersmithCity,
             textColor = TubeLineColors.TextColors.Black,
             hasDisruption = false,
         ),
         TubeLineStatusUiModel(
-            id = TubeLineConstants.JUBILEE_ID,
+            id = TFLLineConstants.JUBILEE_ID,
             displayName = "Jubilee",
             statusText = "Severe Delays",
-            statusSeverity = TubeLineStatusUiModel.StatusSeverity.SEVERE_DELAYS,
+            statusSeverity = TubeLineStatusSeverity.SEVERE_DELAYS,
             disruptionReason =
                 "Severe delays due to an earlier signal failure at Bond Street. " +
-                    "Tickets are being accepted on local bus services.",
+                        "Tickets are being accepted on local bus services.",
             backgroundColor = TubeLineColors.LineColors.Jubilee,
             textColor = TubeLineColors.TextColors.White,
             hasDisruption = true,
         ),
         TubeLineStatusUiModel(
-            id = TubeLineConstants.METROPOLITAN_ID,
+            id = TFLLineConstants.METROPOLITAN_ID,
             displayName = "Metropolitan",
             statusText = "Good Service",
-            statusSeverity = TubeLineStatusUiModel.StatusSeverity.GOOD_SERVICE,
+            statusSeverity = TubeLineStatusSeverity.GOOD_SERVICE,
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.Metropolitan,
             textColor = TubeLineColors.TextColors.White,
             hasDisruption = false,
         ),
         TubeLineStatusUiModel(
-            id = TubeLineConstants.NORTHERN_ID,
+            id = TFLLineConstants.NORTHERN_ID,
             displayName = "Northern",
             statusText = "Good Service",
-            statusSeverity = TubeLineStatusUiModel.StatusSeverity.GOOD_SERVICE,
+            statusSeverity = TubeLineStatusSeverity.GOOD_SERVICE,
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.Northern,
             textColor = TubeLineColors.TextColors.White,
             hasDisruption = false,
         ),
         TubeLineStatusUiModel(
-            id = TubeLineConstants.PICCADILLY_ID,
+            id = TFLLineConstants.PICCADILLY_ID,
             displayName = "Piccadilly",
             statusText = "Minor Delays",
-            statusSeverity = TubeLineStatusUiModel.StatusSeverity.MINOR_DELAYS,
+            statusSeverity = TubeLineStatusSeverity.MINOR_DELAYS,
             disruptionReason = "Minor delays due to train cancellations. Allow extra time for your journey.",
             backgroundColor = TubeLineColors.LineColors.Piccadilly,
             textColor = TubeLineColors.TextColors.White,
             hasDisruption = true,
         ),
         TubeLineStatusUiModel(
-            id = TubeLineConstants.VICTORIA_ID,
+            id = TFLLineConstants.VICTORIA_ID,
             displayName = "Victoria",
             statusText = "Good Service",
-            statusSeverity = TubeLineStatusUiModel.StatusSeverity.GOOD_SERVICE,
+            statusSeverity = TubeLineStatusSeverity.GOOD_SERVICE,
             disruptionReason = null,
             backgroundColor = TubeLineColors.LineColors.Victoria,
             textColor = TubeLineColors.TextColors.White,
             hasDisruption = false,
         ),
         TubeLineStatusUiModel(
-            id = TubeLineConstants.WATERLOO_CITY_ID,
+            id = TFLLineConstants.WATERLOO_CITY_ID,
             displayName = "Waterloo & City",
             statusText = "Planned Closure",
-            statusSeverity = TubeLineStatusUiModel.StatusSeverity.PLANNED_CLOSURE,
+            statusSeverity = TubeLineStatusSeverity.PLANNED_CLOSURE,
             disruptionReason = "Closed Saturday and Sunday. The line operates Monday to Friday only, usually from 06:20 to 21:30.",
             backgroundColor = TubeLineColors.LineColors.WaterlooCity,
             textColor = TubeLineColors.TextColors.Black,

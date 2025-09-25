@@ -1,6 +1,6 @@
 package com.intsoftdev.tflstatus.presentation
 
-object TubeLineConstants {
+object TFLLineConstants {
     const val VICTORIA_ID = "victoria"
     const val CIRCLE_ID = "circle"
     const val PICCADILLY_ID = "piccadilly"

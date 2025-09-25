@@ -47,10 +47,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.TFL_LINE_IDS
+import com.intsoftdev.tflstatus.presentation.TFLLineConstants.TFL_LINE_IDS
 import com.intsoftdev.tflstatus.presentation.TubeStatusUiState
 import com.intsoftdev.tflstatus.presentation.TubeStatusViewModel
-import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusUiModel
+import com.intsoftdev.tflstatus.ui.model.TubeLineStatusUiModel
+import com.intsoftdev.tflstatus.ui.model.toUiModel
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -191,20 +192,9 @@ internal fun tflStatusScreenInternal(
                                     ),
                                 verticalArrangement = Arrangement.spacedBy(20.dp),
                             ) {
-                                currentState.lastUpdated?.let { timestamp ->
-                                    item {
-                                        Text(
-                                            text = "Last updated: $timestamp",
-                                            style = MaterialTheme.typography.headlineSmall,
-                                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                                            modifier = Modifier.fillMaxWidth(),
-                                            textAlign = TextAlign.Center,
-                                        )
-                                    }
-                                }
 
                                 items(currentState.tubeLines, key = { it.id }) { tubeLineUiModel ->
-                                    tubeLineCard(tubeLineUiModel = tubeLineUiModel)
+                                    TubeLineCard(tubeLineUiModel = tubeLineUiModel.toUiModel())
                                 }
                             }
                         }
@@ -216,7 +206,7 @@ internal fun tflStatusScreenInternal(
 }
 
 @Composable
-internal fun tubeLineCard(
+internal fun TubeLineCard(
     tubeLineUiModel: TubeLineStatusUiModel,
     modifier: Modifier = Modifier,
 ) {

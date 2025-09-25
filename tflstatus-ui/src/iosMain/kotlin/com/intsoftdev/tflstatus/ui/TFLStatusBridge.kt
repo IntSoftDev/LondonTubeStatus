@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
 import com.intsoftdev.tflstatus.TflApiConfig
 import com.intsoftdev.tflstatus.initTflSDK
-import com.intsoftdev.tflstatus.presentation.TubeLineColors.BackgroundColors.ContainerBackground
+import com.intsoftdev.tflstatus.ui.constants.TubeLineColors.BackgroundColors.ContainerBackground
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.UIKit.UIViewController
 
@@ -43,13 +43,13 @@ fun createTFLStatusViewController(
     initTflSDK(enableLogging, apiConfig)
     return ComposeUIViewController {
         if (showBackButton && onBackPressed != null) {
-            tflStatusUI(
+            TflStatusUI(
                 modifier = Modifier.fillMaxSize(),
                 onBackPressed = onBackPressed,
             )
         } else {
             // Use the screen content without back button
-            tflStatusScreenContent(
+            TflStatusUI(
                 modifier = Modifier.fillMaxSize(),
                 onBackPressed = null,
                 backgroundColor = ContainerBackground,

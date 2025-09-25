@@ -1,19 +1,7 @@
-package com.intsoftdev.tflstatus.presentation
+package com.intsoftdev.tflstatus.ui.constants
 
 import androidx.compose.ui.graphics.Color
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.BAKERLOO_ID
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.CENTRAL_ID
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.CIRCLE_ID
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.DISTRICT_ID
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.ELIZABETH_ID
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.HAMMERSMITH_CITY_ID
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.JUBILEE_ID
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.LONDON_OVERGROUND_ID
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.METROPOLITAN_ID
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.NORTHERN_ID
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.PICCADILLY_ID
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.VICTORIA_ID
-import com.intsoftdev.tflstatus.presentation.TubeLineConstants.WATERLOO_CITY_ID
+import com.intsoftdev.tflstatus.presentation.TFLLineConstants
 
 /**
  * Centralized colors for London Tube lines following TfL's official color scheme
@@ -21,8 +9,8 @@ import com.intsoftdev.tflstatus.presentation.TubeLineConstants.WATERLOO_CITY_ID
 object TubeLineColors {
     // Text colors
     object TextColors {
-        val White = Color.White
-        val Black = Color.Black
+        val White = Color.Companion.White
+        val Black = Color.Companion.Black
     }
 
     // Background colors
@@ -62,33 +50,33 @@ object TubeLineColors {
      */
     fun getLineColorScheme(lineName: String): LineColorScheme {
         return when (lineName.lowercase()) {
-            BAKERLOO_ID -> LineColorScheme(LineColors.Bakerloo, TextColors.White)
-            CIRCLE_ID -> LineColorScheme(LineColors.Circle, TextColors.Black)
-            CENTRAL_ID -> LineColorScheme(LineColors.Central, TextColors.White)
-            DISTRICT_ID -> LineColorScheme(LineColors.District, TextColors.White)
-            ELIZABETH_ID, "elizabeth line" ->
+            TFLLineConstants.BAKERLOO_ID -> LineColorScheme(LineColors.Bakerloo, TextColors.White)
+            TFLLineConstants.CIRCLE_ID -> LineColorScheme(LineColors.Circle, TextColors.Black)
+            TFLLineConstants.CENTRAL_ID -> LineColorScheme(LineColors.Central, TextColors.White)
+            TFLLineConstants.DISTRICT_ID -> LineColorScheme(LineColors.District, TextColors.White)
+            TFLLineConstants.ELIZABETH_ID, "elizabeth line" ->
                 LineColorScheme(
                     LineColors.ElizabethLine,
                     TextColors.White,
                 )
 
-            HAMMERSMITH_CITY_ID, "hammersmith & city" ->
+            TFLLineConstants.HAMMERSMITH_CITY_ID, "hammersmith & city" ->
                 LineColorScheme(
                     LineColors.HammersmithCity,
                     TextColors.Black,
                 )
-            JUBILEE_ID -> LineColorScheme(LineColors.Jubilee, TextColors.White)
-            METROPOLITAN_ID -> LineColorScheme(LineColors.Metropolitan, TextColors.White)
-            NORTHERN_ID -> LineColorScheme(LineColors.Northern, TextColors.White)
-            PICCADILLY_ID -> LineColorScheme(LineColors.Piccadilly, TextColors.White)
-            VICTORIA_ID -> LineColorScheme(LineColors.Victoria, TextColors.White)
-            WATERLOO_CITY_ID, "waterloo & city" ->
+            TFLLineConstants.JUBILEE_ID -> LineColorScheme(LineColors.Jubilee, TextColors.White)
+            TFLLineConstants.METROPOLITAN_ID -> LineColorScheme(LineColors.Metropolitan, TextColors.White)
+            TFLLineConstants.NORTHERN_ID -> LineColorScheme(LineColors.Northern, TextColors.White)
+            TFLLineConstants.PICCADILLY_ID -> LineColorScheme(LineColors.Piccadilly, TextColors.White)
+            TFLLineConstants.VICTORIA_ID -> LineColorScheme(LineColors.Victoria, TextColors.White)
+            TFLLineConstants.WATERLOO_CITY_ID, "waterloo & city" ->
                 LineColorScheme(
                     LineColors.WaterlooCity,
                     TextColors.Black,
                 )
 
-            LONDON_OVERGROUND_ID, "london overground" ->
+            TFLLineConstants.LONDON_OVERGROUND_ID, "london overground" ->
                 LineColorScheme(
                     LineColors.LondonOverground,
                     TextColors.White,
