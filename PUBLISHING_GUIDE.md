@@ -1,6 +1,6 @@
 # TFL Status KMP Library Publishing Guide
 
-This guide covers how to publish both the `tflstatus` core library and `tflstatus-ui` Compose
+This guide covers how to publish both the `tflstatus-core` core library and `tflstatus-ui` Compose
 library to Maven Central.
 
 ## 📋 Prerequisites
@@ -10,7 +10,7 @@ library to Maven Central.
 1. **Create Sonatype Account**:
     - Go to [Sonatype Central Portal](https://central.sonatype.com/)
     - Register with your GitHub account
-    - Verify your namespace `com.intsoftdev`
+    - Verify your namespace e.g `com.intsoftdev`
 
 2. **Generate GPG Key for Signing**:
 
@@ -61,7 +61,7 @@ signing.gnupg.passphrase=YOUR_GPG_PASSPHRASE
 Update both library `build.gradle.kts` files:
 
 ```kotlin
-// For tflstatus/build.gradle.kts and tflstatus-ui/build.gradle.kts
+// For tflstatus-core/build.gradle.kts and tflstatus-ui/build.gradle.kts
 import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
@@ -69,20 +69,20 @@ plugins {
     // ... other plugins
 }
 
-group = "com.intsoftdev"
-version = "1.0.0" // Update version as needed
+group = "com.intsoftdev" // Update as needed
+version = "0.0.2" // Update version as needed
 
 mavenPublishing {
     coordinates(
         groupId = group.toString(),
-        artifactId = "tflstatus", // or "tflstatus-ui"
+        artifactId = "tflstatus-core", // or "tflstatus-ui"
         version = version.toString()
     )
 
     pom {
         name.set("TFL Line Status KMP library") // Update for each library
         description.set("Multiplatform SDK retrieve and show the current status of London Tube lines")
-        inceptionYear.set("2024")
+        inceptionYear.set("2025")
         url.set("https://github.com/IntSoftDev/LondonTubeStatus")
         
         licenses {
@@ -95,12 +95,12 @@ mavenPublishing {
         
         developers {
             developer {
-                id.set("azaka01")
-                name.set("A Zaka")
-                email.set("az@intsoftdev.com")
-                url.set("https://github.com/azaka01")
-                roles.set(listOf("Developer"))
-                timezone.set("GMT")
+                id.set("<developerId>")
+                name.set("<developerName>")
+                email.set("<email>")
+                url.set("<githubURL>")
+                roles.set(listOf("<role>"))
+                timezone.set("<Timezone>")
             }
         }
         
@@ -142,20 +142,18 @@ Follow [Semantic Versioning](https://semver.org/):
 
 ### 3. Publishing Commands
 
-#### For Core Library (`tflstatus`)
+#### For Core Library (`tflstatus-core`)
 
 ```bash
-# Navigate to tflstatus directory
-cd tflstatus
+# Navigate to tflstatus-core directory
+cd tflstatus-core
 
 # Clean and build
 ./gradlew clean build
 
 # Publish to staging repository
-./gradlew publishToSonatype
+./gradlew publishToMavenCentral
 
-# Close and release (if auto-release is disabled)
-./gradlew closeAndReleaseSonatypeStagingRepository
 ```
 
 #### For UI Library (`tflstatus-ui`)
@@ -168,26 +166,24 @@ cd tflstatus-ui
 ./gradlew clean build
 
 # Publish to staging repository
-./gradlew publishToSonatype
-
-# Close and release (if auto-release is disabled)
-./gradlew closeAndReleaseSonatypeStagingRepository
+./gradlew publishToMavenCentral
 ```
 
 #### Publish Both Libraries (from root)
 
 ```bash
-# From project root
-./gradlew :tflstatus:publishToSonatype
-./gradlew :tflstatus-ui:publishToSonatype
+# From project root - publish to staging
+./gradlew :tflstatus-core:publishToMavenCentral
+./gradlew :tflstatus-ui:publishToMavenCentral
 
-# Or publish all at once
-./gradlew publishToSonatype
+# Or publish and release in one step
+./gradlew :tflstatus-core:publishAndReleaseToMavenCentral
+./gradlew :tflstatus-ui:publishAndReleaseToMavenCentral
 ```
 
 ## 📦 Library Distribution Strategy
 
-### Core Library (`com.intsoftdev:tflstatus`)
+### Core Library (`com.intsoftdev:tflstatus-core`)
 
 **What it contains:**
 
@@ -219,7 +215,7 @@ cd tflstatus-ui
 ```kotlin
 // In your app's build.gradle.kts
 dependencies {
-    implementation("com.intsoftdev:tflstatus:1.0.0")
+    implementation("com.intsoftdev:tflstatus-core:<version>")
 }
 
 // Usage example
@@ -241,41 +237,18 @@ class YourViewModel(
 ```kotlin
 // In your app's build.gradle.kts
 dependencies {
-    implementation("com.intsoftdev:tflstatus:1.0.0")
-    implementation("com.intsoftdev:tflstatus-ui:1.0.0")
+    implementation("com.intsoftdev:tflstatus-ui:<version>")
 }
 
 // Usage example
 @Composable
 fun YourApp() {
     // From menu or navigation
-    TFLStatusUI(
+    TflStatusUI(
         onBackPressed = { /* handle back */ }
     )
 }
 ```
-
-## 🔍 Verification
-
-After publishing, verify your libraries are available:
-
-1. **Check Maven Central**:
-    - Search for `com.intsoftdev` on [Maven Central](https://central.sonatype.com/)
-    - Verify both `tflstatus` and `tflstatus-ui` are listed
-
-2. **Test Integration**:
-
-```kotlin
-// Create a test project and add dependencies
-dependencies {
-    implementation("com.intsoftdev:tflstatus:1.0.0")
-    implementation("com.intsoftdev:tflstatus-ui:1.0.0")
-}
-```
-
-3. **Monitor Download Stats**:
-    - Check download statistics on Maven Central
-    - Monitor GitHub releases and issues
 
 ## 🚨 Troubleshooting
 
@@ -290,7 +263,7 @@ export GPG_TTY=$(tty)
 ```
 
 2. **Namespace Verification**:
-    - Ensure you own the `com.intsoftdev` namespace in Maven Central
+    - Ensure you own the `<com.yourdomainname>` namespace in Maven Central
     - Add DNS TXT record or GitHub repository verification
 
 3. **Dependencies Not Found**:
@@ -300,8 +273,17 @@ export GPG_TTY=$(tty)
 4. **Publication Fails**:
 
 ```bash
-# Check staging repositories
-./gradlew getSonatypeStagingProfiles
+# Check available staging tasks
+./gradlew tasks | grep staging
+
+# Create staging repository
+./gradlew createStagingRepository
+
+# Publish to staging repository
+./gradlew publishToMavenCentral
+
+# Release staging repository
+./gradlew releaseRepository
 ```
 
 ## 📋 Release Checklist
@@ -313,7 +295,7 @@ Before each release:
 - [ ] All tests passing on Android and iOS
 - [ ] Documentation updated
 - [ ] CHANGELOG.md updated
-- [ ] Git tag created: `git tag v1.0.0`
+- [ ] Git tag created: `git tag v0.0.2`
 - [ ] GitHub release created with release notes
 - [ ] Libraries published to Maven Central
 - [ ] Integration tested in sample apps
@@ -321,11 +303,12 @@ Before each release:
 
 ## 📈 Version Compatibility Matrix
 
-| tflstatus-ui | tflstatus (core) | Compose Multiplatform | Notes |
-|-------------|------------------|---------------------|-------|
-| 1.0.0       | 1.0.0           | 1.8.1              | Initial release |
-| 1.1.0       | 1.0.x           | 1.8.1              | UI enhancements |
-| 2.0.0       | 2.0.0           | 1.9.0              | Breaking changes |
+| tflstatus-ui | tflstatus-core | Compose Multiplatform | Notes                  |
+|--------------|----------------|-----------------------|------------------------|
+| 0.0.2        | 0.0.2          | 1.8.1                 | Current release        |
+| 1.0.0        | 1.0.0          | 1.8.1                 | Planned stable release |
+| 1.1.0        | 1.0.x          | 1.8.1                 | UI enhancements        |
+| 2.0.0        | 2.0.0          | 1.9.0                 | Breaking changes       |
 
 ## 📞 Support
 

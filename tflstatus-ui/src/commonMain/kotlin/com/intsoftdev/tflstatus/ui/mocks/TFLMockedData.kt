@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.intsoftdev.tflstatus.presentation.TFLLineConstants
 import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusSeverity
-import com.intsoftdev.tflstatus.ui.TubeLineCard
 import com.intsoftdev.tflstatus.ui.constants.TubeLineColors
 import com.intsoftdev.tflstatus.ui.model.TubeLineStatusUiModel
+import com.intsoftdev.tflstatus.ui.tubeLineCard
 
 /**
  * Sample composable for testing and development.
@@ -23,7 +23,7 @@ import com.intsoftdev.tflstatus.ui.model.TubeLineStatusUiModel
  */
 
 @Composable
-fun TflStatusSample() {
+fun tflStatusSample() {
     MaterialTheme {
         Box(
             modifier =
@@ -36,7 +36,7 @@ fun TflStatusSample() {
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 items(getSampleTubeLineUiModels()) { tubeLineUiModel ->
-                    TubeLineCard(tubeLineUiModel = tubeLineUiModel)
+                    tubeLineCard(tubeLineUiModel = tubeLineUiModel)
                 }
             }
         }
@@ -62,7 +62,7 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             statusSeverity = TubeLineStatusSeverity.PART_CLOSURE,
             disruptionReason =
                 "Part closure between Liverpool Street and Leytonstone due to planned engineering work. " +
-                        "Use alternative routes.",
+                    "Use alternative routes.",
             backgroundColor = TubeLineColors.LineColors.Central,
             textColor = TubeLineColors.TextColors.White,
             hasDisruption = true,
@@ -114,7 +114,7 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             statusSeverity = TubeLineStatusSeverity.SEVERE_DELAYS,
             disruptionReason =
                 "Severe delays due to an earlier signal failure at Bond Street. " +
-                        "Tickets are being accepted on local bus services.",
+                    "Tickets are being accepted on local bus services.",
             backgroundColor = TubeLineColors.LineColors.Jubilee,
             textColor = TubeLineColors.TextColors.White,
             hasDisruption = true,

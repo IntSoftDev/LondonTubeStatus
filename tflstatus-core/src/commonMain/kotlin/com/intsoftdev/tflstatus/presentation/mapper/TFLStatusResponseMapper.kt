@@ -41,10 +41,11 @@ private fun TFLStatusResponseItem.getStatusInfo(): StatusInfo {
     val status = lineStatuses.firstOrNull()
     return when {
         status == null -> StatusInfo("No status information", TubeLineStatusSeverity.UNKNOWN)
-        status.statusSeverityDescription.isEmpty() -> StatusInfo(
-            "Unknown",
-            TubeLineStatusSeverity.UNKNOWN,
-        )
+        status.statusSeverityDescription.isEmpty() ->
+            StatusInfo(
+                "Unknown",
+                TubeLineStatusSeverity.UNKNOWN,
+            )
 
         else -> {
             val text = status.statusSeverityDescription

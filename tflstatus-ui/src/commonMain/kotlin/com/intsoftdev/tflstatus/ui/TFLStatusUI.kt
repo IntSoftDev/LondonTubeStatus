@@ -21,14 +21,14 @@ import com.intsoftdev.tflstatus.ui.constants.TubeLineColors.BackgroundColors.Con
  * ```
  */
 @Composable
-fun TflStatusUI(
+fun tflStatusUI(
     modifier: Modifier = Modifier,
     onBackPressed: (() -> Unit)? = null,
     showTitle: Boolean = false,
     title: String = "London Tube Status",
     backgroundColor: Color = ContainerBackground,
 ) {
-    TflStatusScreen(
+    tflStatusScreen(
         modifier = modifier,
         onBackPressed = onBackPressed,
         showTitle = showTitle,
@@ -38,7 +38,7 @@ fun TflStatusUI(
 }
 
 @Composable
-private fun TflStatusScreen(
+private fun tflStatusScreen(
     modifier: Modifier = Modifier,
     onBackPressed: (() -> Unit)? = null,
     showTitle: Boolean = true,

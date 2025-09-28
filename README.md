@@ -1,6 +1,6 @@
 # London Tube Status - Kotlin Multiplatform Library
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.intsoftdev/tflstatus)](https://central.sonatype.com/search?q=com.intsoftdev.tflstatus)
+[![Maven Central](https://img.shields.io/maven-central/v/com.intsoftdev/tflstatus-core)](https://central.sonatype.com/search?q=com.intsoftdev.tflstatus-core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Kotlin](https://img.shields.io/badge/kotlin-multiplatform-blue.svg?logo=kotlin)](http://kotlinlang.org)
 [![Compose Multiplatform](https://img.shields.io/badge/Compose-Multiplatform-blue.svg)](https://www.jetbrains.com/lp/compose-multiplatform/)
@@ -12,8 +12,7 @@ with ready-to-use UI components and business logic for Android and iOS applicati
 
 - **Real-time TFL Data**: Fetches live tube line status from Transport for London API
 - **Kotlin Multiplatform**: Shared business logic for Android and iOS
-- **Compose Multiplatform UI**: Beautiful, native-feeling UI components
-- **Authentic TFL Branding**: Official TFL colors and styling
+- **Compose Multiplatform UI**: Native-feeling UI components
 - **Two Integration Options**: Core library only or complete UI solution
 - **Easy Integration**: Drop into existing navigation patterns
 - **Offline Handling**: Graceful error states and retry mechanisms
@@ -22,7 +21,7 @@ with ready-to-use UI components and business logic for Android and iOS applicati
 
 The project consists of three main modules:
 
-### Core Library (`com.intsoftdev:tflstatus`)
+### Core Library (`com.intsoftdev:tflstatus-core`)
 
 - Business logic and data layer
 - TFL API integration with Ktor
@@ -43,71 +42,6 @@ The project consists of three main modules:
 - Example theming and navigation
 - Development and testing environment
 
-## Quick Start
-
-### Android Integration
-
-Add to your `build.gradle.kts`:
-
-```kotlin
-dependencies {
-    // Option 1: Complete UI solution (recommended)
-    implementation("com.intsoftdev:tflstatus-ui:1.0.0")
-    
-    // Option 2: Core library only (custom UI)
-    // implementation("com.intsoftdev:tflstatus:1.0.0")
-}
-```
-
-Basic usage with navigation:
-
-```kotlin
-@Composable
-fun AppNavigation() {
-    val navController = rememberNavController()
-    
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
-            HomeScreen(onNavigateToTFL = { 
-                navController.navigate("tfl_status") 
-            })
-        }
-        
-        composable("tfl_status") {
-            TFLStatusUI(onBackPressed = { 
-                navController.popBackStack() 
-            })
-        }
-    }
-}
-```
-
-### iOS Integration
-
-Add the framework to your iOS project and use in SwiftUI:
-
-```swift
-import SwiftUI
-import tflstatus_ui
-
-struct ContentView: View {
-    @State private var showTFLStatus = false
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                Button("London Tube Status") {
-                    showTFLStatus = true
-                }
-            }
-            .fullScreenCover(isPresented: $showTFLStatus) {
-                TFLStatusViewWrapper(isPresented: $showTFLStatus)
-            }
-        }
-    }
-}
-```
-
 ## Development Setup
 
 ### Prerequisites
@@ -115,7 +49,8 @@ struct ContentView: View {
 - **Android Studio** Iguana+ with Kotlin Multiplatform plugin
 - **Xcode 15+** (for iOS development)
 - **Java 11+**
-- **TFL API Credentials** (free from [TFL Developer Portal](https://api.tfl.gov.uk/))
+- **TFL API Credentials** (free from [TFL Developer Portal](https://api.tfl.gov.uk/)) - Not required
+  to run the app, but recommended to avoid throttling and rate limitations from TFL servers
 
 ### Local Development
 
@@ -143,27 +78,22 @@ struct ContentView: View {
    ./gradlew :composeApp:assembleDebug
    ```
 
-## Fast Development Commands
-
-For faster builds during development:
+## Development Commands
 
 ```bash
-# Fast Android-only build (skips iOS frameworks)
-./gradlew compileDebugKotlinAndroid assembleDebug -x podDebugFramework
+# Android-only build
+./gradlew assembleDebug
 
-# Quick tests (Android + common)
-./gradlew testDebugUnitTest -x compileKotlinIos*
+# Tests (Android + common)
+./gradlew testDebugUnitTest
 
-# Fast lint check
-./gradlew lintDebug -x podDebugFramework
+# Lint check
+./gradlew ktlintCheck
 
-# Build libraries only (Android)
-./gradlew :tflstatus:compileKotlinAndroid :tflstatus-ui:compileKotlinAndroid
-
-# Full build (when you need iOS)
+# Full build 
 ./gradlew build
 
-# Clean build cache (if builds are acting strange)
+# Clean build cache
 ./gradlew clean
 ```
 
@@ -176,7 +106,7 @@ LondonTubeStatus/
 │       ├── androidMain/        # Android-specific code
 │       ├── commonMain/         # Shared Compose UI
 │       └── iosMain/            # iOS-specific code
-├── tflstatus/                  # Core business logic library
+├── tflstatus-core/             # Core business logic library
 │   └── src/
 │       ├── commonMain/         # Shared business logic
 │       ├── androidMain/        # Android HTTP client
@@ -186,20 +116,217 @@ LondonTubeStatus/
 │       ├── commonMain/         # Compose Multiplatform UI
 │       └── ...
 ├── iosApp/                    # iOS app wrapper
-├── INTEGRATION_EXAMPLES.md    # Comprehensive integration guide
 └── PUBLISHING_GUIDE.md        # Library publishing documentation
 ```
 
 ## Documentation
 
-- **[Integration Examples](INTEGRATION_EXAMPLES.md)** - Comprehensive integration guide with code
-  samples
 - **[Publishing Guide](PUBLISHING_GUIDE.md)** - How to publish updates to Maven Central
 - **[TFL API Documentation](https://api.tfl.gov.uk/)** - Official TFL API reference
 
+## Quick Start
+
+### Android Integration
+
+To use the pre-built artifacts:
+
+In `gradle.properties`, set:
+   ```properties
+   importLocalKmp=false
+   ```
+Add to your `build.gradle.kts`:
+
+```kotlin
+dependencies {
+    // Option 1: Complete UI solution (recommended)
+    implementation("com.intsoftdev:tflstatus-ui:<version>")
+    
+    // Option 2: Core library only (custom UI)
+    implementation("com.intsoftdev:tflstatus-core:<version>")
+}
+```
+
+### Initialisation
+
+The TFL SDK can be initialised in your Application class with various configuration options:
+
+**Android:**
+
+```kotlin
+class MyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+
+        // Basic initialisation
+        initTflSDK(context = this)
+
+        // With custom API configuration
+        val apiConfig = TflApiConfig(
+            appId = "your-app-id",
+            appKey = "your-api-key"
+        )
+        initTflSDK(context = this, apiConfig = apiConfig)
+
+        // With existing Koin application
+        val koinApp = startKoin { /* your modules */ }
+        initTflSDK(context = this, koinApplication = koinApp)
+    }
+}
+```
+### iOS Integration
+
+#### CocoaPods Setup
+
+Add the TFL Status library to your iOS project using CocoaPods:
+
+**Local Development**
+
+```ruby
+# Podfile
+platform :ios, '17.0'
+
+install! 'cocoapods', :deterministic_uuids => false
+
+target 'YourApp' do
+    use_frameworks!
+    
+    # Local paths - adjust to match your project structure
+    pod 'tflstatus_core', :path => '../tflstatus-core/'
+    pod 'tflstatus_ui', :path => '../tflstatus-ui/'
+end
+```
+
+Then run:
+```bash
+cd ios
+pod install
+```
+
+```swift
+// From iOS Swift code:
+let viewController = TFLStatusBridgeKt.createTFLStatusViewController(
+    showBackButton: true,
+    onBackPressed: {
+        // Handle back button press
+    },
+    enableLogging: true,
+    apiConfig: TflApiConfig()
+)
+```
+
+#### SwiftUI Integration
+
+Add the framework to your iOS project and use in SwiftUI:
+
+```swift
+import SwiftUI
+import tflstatus_ui
+import tflstatus_core
+
+struct TFLStatusComposeView: UIViewControllerRepresentable {
+   var showBackButton: Bool = true
+   var onBackPressed: (() -> Void)?
+
+   func makeUIViewController(context: Context) -> UIViewController {
+      return TFLStatusBridgeKt.createTFLStatusViewController(
+              showBackButton: showBackButton,
+              onBackPressed: onBackPressed ?? {
+              },
+              enableLogging: true,
+              apiConfig: Tflstatus_coreTflApiConfig.init(
+                      appId: "your-app-id",
+                      appKey: "your-api-key"
+              )
+      )
+    }
+
+   func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+      // No-op: Compose content is self-updating
+   }
+}
+
+struct TFLStatusScreen: View {
+   @Environment(\.dismiss) private var dismiss
+
+   var body: some View {
+      NavigationView {
+         ZStack {
+            Color.black
+                .navigationBarTitleDisplayMode(.inline)
+                .edgesIgnoringSafeArea(.all)
+
+            // Pipe SwiftUI's dismiss into KMP's onBackPressed
+            TFLStatusComposeView(
+                    showBackButton: true,
+                    onBackPressed: { dismiss() }
+            )
+         }
+         .toolbar {
+            ToolbarItem(placement: .principal) {
+               Text("TFL Status")
+                   .foregroundColor(.white)
+                   .font(.headline)
+            }
+         }
+         .navigationBarBackButtonHidden(true)
+         .navigationBarItems(leading: Button(action: {
+            dismiss()
+         }) {
+            Image(systemName: "arrow.left")
+                .foregroundColor(.white)
+            })
+        }
+        .preferredColorScheme(.dark)
+    }
+}
+
+// Usage in your main ContentView
+struct ContentView: View {
+    @State private var showTFLStatus = false
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                Button("London Tube Status") {
+                    showTFLStatus = true
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .navigationTitle("Your App")
+            .sheet(isPresented: $showTFLStatus) {
+               TFLStatusScreen()
+            }
+        }
+    }
+}
+```
+
+### Basic usage with navigation:
+
+```kotlin
+@Composable
+fun AppNavigation() {
+    val navController = rememberNavController()
+    
+    NavHost(navController = navController, startDestination = "home") {
+        composable("home") {
+            HomeScreen(onNavigateToTFL = { 
+                navController.navigate("tfl_status") 
+            })
+        }
+        
+        composable("tfl_status") {
+            TflStatusUI(onBackPressed = { 
+                navController.popBackStack() 
+            })
+        }
+    }
+}
+```
+
 ## Theming & Customization
 
-The UI library uses authentic TFL branding but can be customized:
+The UI library uses authentic TFL branding but can be customised:
 
 ```kotlin
 @Composable
@@ -208,7 +335,7 @@ fun CustomThemedTFL() {
         colorScheme = yourCustomColorScheme,
         typography = yourCustomTypography
     ) {
-        TFLStatusUI(onBackPressed = { /* handle back */ })
+        TflStatusUI(onBackPressed = { /* handle back */ })
     }
 }
 ```
@@ -234,29 +361,11 @@ fun CustomTFLScreen(viewModel: TubeStatusViewModel = koinInject()) {
 }
 ```
 
-### Dependency Injection
-
-```kotlin
-class YourApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        
-        startKoin {
-            androidContext(this@YourApplication)
-            modules(
-                yourAppModule,
-                TFLStatusDiModule.module // Included automatically with UI library
-            )
-        }
-    }
-}
-```
-
 ## Publishing
 
 Libraries are published to Maven Central:
 
-- **Core**: `com.intsoftdev:tflstatus`
+- **Core**: `com.intsoftdev:tflstatus-core`
 - **UI**: `com.intsoftdev:tflstatus-ui`
 
 See [PUBLISHING_GUIDE.md](PUBLISHING_GUIDE.md) for detailed publishing instructions.
@@ -283,7 +392,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/IntSoftDev/LondonTubeStatus/issues)
-- **Documentation**: [Integration Examples](INTEGRATION_EXAMPLES.md)
+- **Documentation**: [ReadMe](Readme.md)
 - **Email**: az@intsoftdev.com
 
 ---

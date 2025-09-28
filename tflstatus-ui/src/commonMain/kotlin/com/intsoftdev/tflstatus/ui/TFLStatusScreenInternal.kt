@@ -192,9 +192,8 @@ internal fun tflStatusScreenInternal(
                                     ),
                                 verticalArrangement = Arrangement.spacedBy(20.dp),
                             ) {
-
                                 items(currentState.tubeLines, key = { it.id }) { tubeLineUiModel ->
-                                    TubeLineCard(tubeLineUiModel = tubeLineUiModel.toUiModel())
+                                    tubeLineCard(tubeLineUiModel = tubeLineUiModel.toUiModel())
                                 }
                             }
                         }
@@ -206,7 +205,7 @@ internal fun tflStatusScreenInternal(
 }
 
 @Composable
-internal fun TubeLineCard(
+internal fun tubeLineCard(
     tubeLineUiModel: TubeLineStatusUiModel,
     modifier: Modifier = Modifier,
 ) {

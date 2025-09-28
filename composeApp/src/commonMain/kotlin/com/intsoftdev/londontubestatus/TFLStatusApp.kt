@@ -5,8 +5,8 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.intsoftdev.tflstatus.ui.TflStatusUI
-import com.intsoftdev.tflstatus.ui.mocks.TflStatusSample
+import com.intsoftdev.tflstatus.ui.mocks.tflStatusSample
+import com.intsoftdev.tflstatus.ui.tflStatusUI
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 private val TflDarkScheme =
@@ -38,9 +38,9 @@ fun tfLStatusTheme(
 
 @Suppress("ComposableNaming")
 @Composable
-fun TflStatusApp() {
+fun tflStatusApp() {
     tfLStatusTheme(darkTheme = true) {
-        TflStatusUI(
+        tflStatusUI(
             showTitle = true,
             title = "London Tube Status",
             onBackPressed = null,
@@ -51,6 +51,6 @@ fun TflStatusApp() {
 @Suppress("ComposableNaming")
 @Preview
 @Composable
-fun TflPreview() {
-    TflStatusSample()
+fun tflPreview() {
+    tflStatusSample()
 }

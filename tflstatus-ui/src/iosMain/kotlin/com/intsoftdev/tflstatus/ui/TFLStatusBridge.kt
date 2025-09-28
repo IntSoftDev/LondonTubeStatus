@@ -43,13 +43,13 @@ fun createTFLStatusViewController(
     initTflSDK(enableLogging, apiConfig)
     return ComposeUIViewController {
         if (showBackButton && onBackPressed != null) {
-            TflStatusUI(
+            tflStatusUI(
                 modifier = Modifier.fillMaxSize(),
                 onBackPressed = onBackPressed,
             )
         } else {
             // Use the screen content without back button
-            TflStatusUI(
+            tflStatusUI(
                 modifier = Modifier.fillMaxSize(),
                 onBackPressed = null,
                 backgroundColor = ContainerBackground,

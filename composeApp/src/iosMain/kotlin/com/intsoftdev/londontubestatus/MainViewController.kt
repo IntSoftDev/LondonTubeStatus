@@ -19,5 +19,5 @@ fun mainViewController() =
             initTflSDK(enableLogging = true)
         },
     ) {
-        TflStatusApp()
+        tflStatusApp()
     }
