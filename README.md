@@ -85,7 +85,7 @@ The project consists of three main modules:
 ./gradlew assembleDebug
 
 # Tests 
- ./gradlew allTests
+./gradlew allTests
 
 # Lint check
 ./gradlew ktlintCheck
