@@ -84,8 +84,8 @@ The project consists of three main modules:
 # Android-only build
 ./gradlew assembleDebug
 
-# Tests (Android + common)
-./gradlew testDebugUnitTest
+# Tests 
+ ./gradlew allTests
 
 # Lint check
 ./gradlew ktlintCheck

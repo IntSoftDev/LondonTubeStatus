@@ -1,4 +1,4 @@
-package com.intsoftdev.tflstatus.presentation.mapper
+package com.intsoftdev.tflstatus.presentation.mappers
 
 import com.intsoftdev.tflstatus.model.TFLStatusResponseItem
 import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusModel
