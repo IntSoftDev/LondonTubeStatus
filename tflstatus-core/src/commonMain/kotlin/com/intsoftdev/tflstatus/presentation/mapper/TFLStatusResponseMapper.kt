@@ -1,53 +1,55 @@
 package com.intsoftdev.tflstatus.presentation.mapper
 
 import com.intsoftdev.tflstatus.model.TFLStatusResponseItem
-import com.intsoftdev.tflstatus.presentation.TubeLineColors
-import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusUiModel
-import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusUiModel.StatusSeverity
+import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusModel
+import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusSeverity
 
-fun TFLStatusResponseItem.toUiModel(): TubeLineStatusUiModel {
+fun TFLStatusResponseItem.toPresentableModel(): TubeLineStatusModel {
     val statusInfo = getStatusInfo()
-    val colorScheme = TubeLineColors.getLineColorScheme(name)
 
-    return TubeLineStatusUiModel(
+    return TubeLineStatusModel(
         id = id,
         displayName = name.formatDisplayName(),
         statusText = statusInfo.text,
         statusSeverity = statusInfo.severity,
         disruptionReason = getDisruptionReason(),
-        backgroundColor = colorScheme.backgroundColor,
-        textColor = colorScheme.textColor,
-        hasDisruption = hasDisruptionReason(),
     )
 }
 
-fun List<TFLStatusResponseItem>.toUiModels(): List<TubeLineStatusUiModel> {
-    return this.map { it.toUiModel() }
-        .sortedWith(compareBy({ it.statusSeverity.displayOrder }, { it.displayName }))
+fun List<TFLStatusResponseItem>.toPresentableModel(): List<TubeLineStatusModel> {
+    return this.map { it.toPresentableModel() }
+}
+
+fun mapStatusSeverity(statusSeverity: Int): TubeLineStatusSeverity {
+    return when (statusSeverity) {
+        10 -> TubeLineStatusSeverity.GOOD_SERVICE
+        9 -> TubeLineStatusSeverity.MINOR_DELAYS
+        8 -> TubeLineStatusSeverity.MINOR_DELAYS
+        7 -> TubeLineStatusSeverity.SEVERE_DELAYS
+        6 -> TubeLineStatusSeverity.PART_CLOSURE
+        5 -> TubeLineStatusSeverity.PART_CLOSURE
+        4 -> TubeLineStatusSeverity.PLANNED_CLOSURE
+        3 -> TubeLineStatusSeverity.SERVICE_CLOSED
+        2 -> TubeLineStatusSeverity.SERVICE_CLOSED
+        1 -> TubeLineStatusSeverity.SERVICE_CLOSED
+        0 -> TubeLineStatusSeverity.SERVICE_CLOSED
+        else -> TubeLineStatusSeverity.UNKNOWN
+    }
 }
 
 private fun TFLStatusResponseItem.getStatusInfo(): StatusInfo {
     val status = lineStatuses.firstOrNull()
     return when {
-        status == null -> StatusInfo("No status information", StatusSeverity.UNKNOWN)
-        status.statusSeverityDescription.isEmpty() -> StatusInfo("Unknown", StatusSeverity.UNKNOWN)
+        status == null -> StatusInfo("No status information", TubeLineStatusSeverity.UNKNOWN)
+        status.statusSeverityDescription.isEmpty() ->
+            StatusInfo(
+                "Unknown",
+                TubeLineStatusSeverity.UNKNOWN,
+            )
+
         else -> {
             val text = status.statusSeverityDescription
-            val severity =
-                when (status.statusSeverity) {
-                    10 -> StatusSeverity.GOOD_SERVICE
-                    9 -> StatusSeverity.MINOR_DELAYS
-                    8 -> StatusSeverity.MINOR_DELAYS
-                    7 -> StatusSeverity.SEVERE_DELAYS
-                    6 -> StatusSeverity.PART_CLOSURE
-                    5 -> StatusSeverity.PART_CLOSURE
-                    4 -> StatusSeverity.PLANNED_CLOSURE
-                    3 -> StatusSeverity.SERVICE_CLOSED
-                    2 -> StatusSeverity.SERVICE_CLOSED
-                    1 -> StatusSeverity.SERVICE_CLOSED
-                    0 -> StatusSeverity.SERVICE_CLOSED
-                    else -> StatusSeverity.UNKNOWN
-                }
+            val severity = mapStatusSeverity(status.statusSeverity)
             StatusInfo(text, severity)
         }
     }
@@ -55,10 +57,6 @@ private fun TFLStatusResponseItem.getStatusInfo(): StatusInfo {
 
 private fun TFLStatusResponseItem.getDisruptionReason(): String? {
     return lineStatuses.firstOrNull()?.reason?.takeIf { it.isNotEmpty() }
-}
-
-private fun TFLStatusResponseItem.hasDisruptionReason(): Boolean {
-    return getDisruptionReason() != null
 }
 
 private fun String.formatDisplayName(): String {
@@ -76,5 +74,5 @@ private fun String.formatDisplayName(): String {
 
 private data class StatusInfo(
     val text: String,
-    val severity: StatusSeverity,
+    val severity: TubeLineStatusSeverity,
 )

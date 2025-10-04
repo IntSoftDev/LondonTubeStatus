@@ -3,7 +3,7 @@ package com.intsoftdev.tflstatus.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.intsoftdev.tflstatus.presentation.TubeLineColors.BackgroundColors.ContainerBackground
+import com.intsoftdev.tflstatus.ui.constants.TubeLineColors.BackgroundColors.ContainerBackground
 
 /**
  * Main entry point for TFL Status UI that can be called from any app menu.
@@ -39,27 +39,6 @@ fun tflStatusUI(
 
 @Composable
 private fun tflStatusScreen(
-    modifier: Modifier = Modifier,
-    onBackPressed: (() -> Unit)? = null,
-    showTitle: Boolean = true,
-    title: String = "London Tube Status",
-    backgroundColor: Color,
-) {
-    tflStatusScreenContent(
-        modifier = modifier,
-        onBackPressed = onBackPressed,
-        showTitle = showTitle,
-        title = title,
-        backgroundColor = backgroundColor,
-    )
-}
-
-/**
- * For apps that want to customise the theme, this provides just the content
- * without MaterialTheme wrapper.
- */
-@Composable
-fun tflStatusScreenContent(
     modifier: Modifier = Modifier,
     onBackPressed: (() -> Unit)? = null,
     showTitle: Boolean = true,

@@ -3,7 +3,7 @@ package com.intsoftdev.tflstatus.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.intsoftdev.tflstatus.domain.GetTFLStatusUseCase
-import com.intsoftdev.tflstatus.presentation.mapper.toUiModels
+import com.intsoftdev.tflstatus.presentation.mapper.toPresentableModel
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -67,11 +67,9 @@ class TubeStatusViewModel(private val usecase: GetTFLStatusUseCase) : ViewModel(
             _uiState.value =
                 result.fold(
                     onSuccess = { responseList ->
-                        val uiModels = responseList.toUiModels()
+                        val uiModels = responseList.toPresentableModel()
                         TubeStatusUiState.Success(
                             tubeLines = uiModels,
-                            // add lastUpdated text if needed to surface in UI
-                            hasDisruptions = uiModels.any { it.hasDisruption },
                         )
                     },
                     onFailure = { err ->
