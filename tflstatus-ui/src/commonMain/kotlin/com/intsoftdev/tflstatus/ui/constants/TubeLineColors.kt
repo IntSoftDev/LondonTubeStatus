@@ -9,8 +9,8 @@ import com.intsoftdev.tflstatus.presentation.TFLLineConstants
 object TubeLineColors {
     // Text colors
     object TextColors {
-        val White = Color.Companion.White
-        val Black = Color.Companion.Black
+        val White = Color.White
+        val Black = Color.Black
     }
 
     // Background colors
