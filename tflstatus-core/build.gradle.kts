@@ -115,6 +115,8 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(isdlibs.kotlin.test)
+                implementation(isdlibs.turbine)
+                implementation(isdlibs.coroutines.test)
             }
         }
 

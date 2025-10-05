@@ -1,10 +1,10 @@
-package com.intsoftdev.tflstatus.model
+package com.intsoftdev.tflstatus.model.tfl
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Via(
+data class RouteSectionNaptanEntrySequence(
     @SerialName("ordinal")
     val ordinal: Int = 0,
     @SerialName("stopPoint")

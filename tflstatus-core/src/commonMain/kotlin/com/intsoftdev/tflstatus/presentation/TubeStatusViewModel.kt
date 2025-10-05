@@ -3,7 +3,8 @@ package com.intsoftdev.tflstatus.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.intsoftdev.tflstatus.domain.GetTFLStatusUseCase
-import com.intsoftdev.tflstatus.presentation.mapper.toPresentableModel
+import com.intsoftdev.tflstatus.presentation.mappers.toPresentableError
+import com.intsoftdev.tflstatus.presentation.mappers.toPresentableModel
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,40 +23,12 @@ class TubeStatusViewModel(private val usecase: GetTFLStatusUseCase) : ViewModel(
                 initialValue = TubeStatusUiState.Loading,
             )
 
-    private fun getUserFriendlyErrorMessage(throwable: Throwable): String {
-        return when {
-            throwable.message?.contains("SocketTimeoutException", ignoreCase = true) == true ||
-                throwable.message?.contains("timeout", ignoreCase = true) == true -> {
-                "Connection timeout. Please check your internet connection and try again."
-            }
-
-            throwable.message?.contains("UnknownHostException", ignoreCase = true) == true ||
-                throwable.message?.contains(
-                    "No address associated",
-                    ignoreCase = true,
-                ) == true -> {
-                "Unable to connect to TFL services. Please check your internet connection."
-            }
-
-            throwable.message?.contains("ConnectException", ignoreCase = true) == true -> {
-                "Connection failed. Please try again later."
-            }
-
-            throwable.message?.contains("HttpException", ignoreCase = true) == true ||
-                throwable.message?.contains("HTTP", ignoreCase = true) == true -> {
-                "TFL services are currently unavailable. Please try again later."
-            }
-
-            else -> "Unable to load tube status. Please try again."
-        }
-    }
-
     private val exceptionHandler =
         CoroutineExceptionHandler { coroutineContext, throwable ->
             Napier.e(tag = TAG) { "exception handler $throwable" }
             viewModelScope.launch {
                 _uiState.value =
-                    TubeStatusUiState.Error(message = getUserFriendlyErrorMessage(throwable))
+                    TubeStatusUiState.Error(message = throwable.toPresentableError())
             }
         }
 
@@ -72,12 +45,10 @@ class TubeStatusViewModel(private val usecase: GetTFLStatusUseCase) : ViewModel(
                             tubeLines = uiModels,
                         )
                     },
-                    onFailure = { err ->
+                    onFailure = { exception ->
+                        Napier.d(exception) { "getLineStatuses: $exception" }
                         TubeStatusUiState.Error(
-                            message =
-                                getUserFriendlyErrorMessage(
-                                    err,
-                                ),
+                            message = exception.toPresentableError(),
                         )
                     },
                 )

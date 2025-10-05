@@ -6,14 +6,19 @@ import com.intsoftdev.tflstatus.network.TFLStatusAPI
 import com.intsoftdev.tflstatus.network.TFLStatusProxy
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.HttpRequestRetry
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+
+const val TIMEOUT_DURATION: Long = 10_000
 
 val networkModule =
     module {
@@ -28,6 +33,7 @@ val networkModule =
 
         single(named(HTTP_CLIENT)) {
             HttpClient {
+                expectSuccess = true
                 install(ContentNegotiation) {
                     json(get())
                 }
@@ -39,6 +45,20 @@ val networkModule =
                             }
                         }
                     level = LogLevel.INFO
+                }
+
+                install(HttpRequestRetry) {
+                    retryIf { request, response ->
+                        !response.status.isSuccess()
+                    }
+                    exponentialDelay()
+                }
+
+                install(HttpTimeout) {
+                    connectTimeoutMillis = TIMEOUT_DURATION
+                    requestTimeoutMillis = TIMEOUT_DURATION
+                    requestTimeoutMillis = TIMEOUT_DURATION
+                    socketTimeoutMillis = TIMEOUT_DURATION
                 }
             }
         }
