@@ -1,6 +1,6 @@
 package com.intsoftdev.tflstatus.network
 
-import com.intsoftdev.tflstatus.model.TFLStatusResponseItem
+import com.intsoftdev.tflstatus.model.tfl.TFLStatusResponseItem
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

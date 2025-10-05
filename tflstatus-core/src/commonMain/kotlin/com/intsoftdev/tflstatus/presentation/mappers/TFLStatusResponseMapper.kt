@@ -1,6 +1,6 @@
 package com.intsoftdev.tflstatus.presentation.mappers
 
-import com.intsoftdev.tflstatus.model.TFLStatusResponseItem
+import com.intsoftdev.tflstatus.model.tfl.TFLStatusResponseItem
 import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusModel
 import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusSeverity
 

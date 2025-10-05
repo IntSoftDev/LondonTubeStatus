@@ -18,9 +18,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -131,34 +133,77 @@ internal fun tflStatusScreenInternal(
                         modifier =
                             Modifier
                                 .align(Alignment.Center)
-                                .padding(16.dp),
+                                .padding(32.dp)
+                                .fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
+                        // Error Icon
+                        Card(
+                            modifier = Modifier.size(80.dp),
+                            shape = RoundedCornerShape(40.dp),
+                            colors =
+                                CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                                ),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                        ) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.ErrorOutline,
+                                    contentDescription = "Error",
+                                    tint = MaterialTheme.colorScheme.error,
+                                    modifier = Modifier.size(48.dp),
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(24.dp))
+
+                        // Error Title
                         Text(
-                            text = "Error loading tube status",
+                            text = "Oops! Something went wrong",
                             style = MaterialTheme.typography.headlineSmall,
-                            color = MaterialTheme.colorScheme.error,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center,
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        // Error Message
                         Text(
                             text = currentState.message,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,
+                            lineHeight = 24.sp,
                         )
-                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Spacer(modifier = Modifier.height(32.dp))
+
+                        // Retry Button
                         Button(
                             onClick = {
                                 viewModel.getLineStatuses(TFL_LINE_IDS)
                             },
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            contentPadding = PaddingValues(horizontal = 32.dp, vertical = 12.dp),
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth(0.6f)
+                                    .height(48.dp),
+                            shape = RoundedCornerShape(24.dp),
+                            elevation =
+                                ButtonDefaults.buttonElevation(
+                                    defaultElevation = 4.dp,
+                                    pressedElevation = 8.dp,
+                                ),
                         ) {
                             Text(
-                                text = "Retry",
+                                text = "Try Again",
                                 fontSize = 16.sp,
-                                fontWeight = FontWeight.Medium,
+                                fontWeight = FontWeight.SemiBold,
                             )
                         }
                     }

@@ -1,29 +1,17 @@
 package com.intsoftdev.tflstatus.presentation.mappers
 
+import com.intsoftdev.tflstatus.model.exceptions.ApiException
+
+object ErrorMessages {
+    const val NETWORK_ERROR = "Network error occurred. Please check your internet connection."
+    const val HTTP_ERROR = "Error getting data from TFL services. Please try again later."
+    const val UNEXPECTED_ERROR = "An unexpected error occurred. Please try again."
+}
+
 fun Throwable.toPresentableError(): String {
-    return when {
-        message?.contains("SocketTimeoutException", ignoreCase = true) == true ||
-            message?.contains("timeout", ignoreCase = true) == true -> {
-            "Connection timeout. Please check your internet connection and try again."
-        }
-
-        message?.contains("UnknownHostException", ignoreCase = true) == true ||
-            message?.contains(
-                "No address associated",
-                ignoreCase = true,
-            ) == true -> {
-            "Unable to connect to TFL services. Please check your internet connection."
-        }
-
-        message?.contains("ConnectException", ignoreCase = true) == true -> {
-            "Connection failed. Please try again later."
-        }
-
-        message?.contains("HttpException", ignoreCase = true) == true ||
-            message?.contains("HTTP", ignoreCase = true) == true -> {
-            "TFL services are currently unavailable. Please try again later."
-        }
-
-        else -> "Unable to load tube status. Please try again."
+    return when (this) {
+        is ApiException.IOException -> ErrorMessages.NETWORK_ERROR
+        is ApiException.HttpError -> ErrorMessages.HTTP_ERROR
+        else -> ErrorMessages.UNEXPECTED_ERROR
     }
 }

@@ -46,6 +46,7 @@ class TubeStatusViewModel(private val usecase: GetTFLStatusUseCase) : ViewModel(
                         )
                     },
                     onFailure = { exception ->
+                        Napier.d(exception) { "getLineStatuses: $exception" }
                         TubeStatusUiState.Error(
                             message = exception.toPresentableError(),
                         )

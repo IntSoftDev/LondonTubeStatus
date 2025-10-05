@@ -3,8 +3,11 @@ package com.intsoftdev.tflstatus.presentation
 import app.cash.turbine.test
 import com.intsoftdev.tflstatus.data.TFLServicesRepository
 import com.intsoftdev.tflstatus.domain.GetTFLStatusUseCase
-import com.intsoftdev.tflstatus.model.LineStatuse
-import com.intsoftdev.tflstatus.model.TFLStatusResponseItem
+import com.intsoftdev.tflstatus.model.exceptions.ApiException
+import com.intsoftdev.tflstatus.model.tfl.LineStatuse
+import com.intsoftdev.tflstatus.model.tfl.TFLStatusResponseItem
+import com.intsoftdev.tflstatus.presentation.mappers.ErrorMessages.HTTP_ERROR
+import com.intsoftdev.tflstatus.presentation.mappers.ErrorMessages.NETWORK_ERROR
 import com.intsoftdev.tflstatus.presentation.model.TubeLineStatusSeverity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -70,7 +73,7 @@ class TubeStatusViewModelTest {
     fun `getLineStatuses with failure emits Error state`() =
         runTest {
             // Arrange
-            val exception = Exception("Network error")
+            val exception = ApiException.HttpError(message = "Network error")
             val fakeRepository = FakeTFLServicesRepository(failureException = exception)
             val useCase = GetTFLStatusUseCase(fakeRepository)
             val viewModel = TubeStatusViewModel(useCase)
@@ -85,7 +88,7 @@ class TubeStatusViewModelTest {
                 assertTrue(initial is TubeStatusUiState.Loading)
                 val errorState = awaitItem()
                 assertTrue(errorState is TubeStatusUiState.Error)
-                assertEquals("Unable to load tube status. Please try again.", errorState.message)
+                assertEquals(HTTP_ERROR, errorState.message)
             }
         }
 
@@ -93,8 +96,8 @@ class TubeStatusViewModelTest {
     fun `getLineStatuses with timeout exception shows timeout error message`() =
         runTest {
             // Arrange
-            val exception = Exception("SocketTimeoutException: timeout")
-            val fakeRepository = FakeTFLServicesRepository(failureException = exception)
+            val fakeRepository =
+                FakeTFLServicesRepository(failureException = ApiException.IOException("Timeout"))
             val useCase = GetTFLStatusUseCase(fakeRepository)
             val viewModel = TubeStatusViewModel(useCase)
 
@@ -109,7 +112,7 @@ class TubeStatusViewModelTest {
                 val errorState = awaitItem()
                 assertTrue(errorState is TubeStatusUiState.Error)
                 assertEquals(
-                    "Connection timeout. Please check your internet connection and try again.",
+                    NETWORK_ERROR,
                     errorState.message,
                 )
             }
@@ -138,11 +141,13 @@ class TubeStatusViewModelTest {
 
     private class FakeTFLServicesRepository(
         var successResult: List<TFLStatusResponseItem>? = null,
-        var failureException: Exception? = null,
+        var failureException: ApiException? = null,
     ) : TFLServicesRepository {
-        override suspend fun getLineStatuses(lineIds: String): List<TFLStatusResponseItem> {
-            failureException?.let { throw it }
-            return successResult ?: emptyList()
+        override suspend fun getLineStatuses(lineIds: String): Result<List<TFLStatusResponseItem>> {
+            failureException?.run {
+                return Result.failure(this)
+            }
+            return Result.success(successResult ?: emptyList())
         }
     }
 }
