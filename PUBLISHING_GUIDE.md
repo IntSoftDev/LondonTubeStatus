@@ -10,7 +10,7 @@ library to Maven Central.
 1. **Create Sonatype Account**:
     - Go to [Sonatype Central Portal](https://central.sonatype.com/)
     - Register with your GitHub account
-    - Verify your namespace e.g `com.intsoftdev`
+    - Verify your namespace e.g `com.<domainname>`
 
 2. **Generate GPG Key for Signing**:
 
@@ -69,7 +69,7 @@ plugins {
     // ... other plugins
 }
 
-group = "com.intsoftdev" // Update as needed
+group = "<com.yourdomainname>" // Update as needed
 version = "0.0.2" // Update version as needed
 
 mavenPublishing {
@@ -183,7 +183,7 @@ cd tflstatus-ui
 
 ## 📦 Library Distribution Strategy
 
-### Core Library (`com.intsoftdev:tflstatus-core`)
+### Core Library (`com.<domainname>:tflstatus-core`)
 
 **What it contains:**
 
@@ -196,7 +196,7 @@ cd tflstatus-ui
 
 **Target audience:** Developers who want TFL data with custom UI
 
-### UI Library (`com.intsoftdev:tflstatus-ui`)
+### UI Library (`com.<domainname>:tflstatus-ui`)
 
 **What it contains:**
 
@@ -215,7 +215,7 @@ cd tflstatus-ui
 ```kotlin
 // In your app's build.gradle.kts
 dependencies {
-    implementation("com.intsoftdev:tflstatus-core:<version>")
+    implementation("com.<domainname>:tflstatus-core:<version>")
 }
 
 // Usage example
@@ -237,7 +237,8 @@ class YourViewModel(
 ```kotlin
 // In your app's build.gradle.kts
 dependencies {
-    implementation("com.intsoftdev:tflstatus-ui:<version>")
+   implementation("com.<domainname>:tflstatus-core:<version>")
+   implementation("com.<domainname>:tflstatus-ui:<version>")
 }
 
 // Usage example
