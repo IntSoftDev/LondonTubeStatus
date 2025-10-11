@@ -139,6 +139,7 @@ Add to your `build.gradle.kts`:
 ```kotlin
 dependencies {
     // Option 1: Complete UI solution (recommended)
+    implementation("com.intsoftdev:tflstatus-core:<version>")
     implementation("com.intsoftdev:tflstatus-ui:<version>")
     
     // Option 2: Core library only (custom UI)
@@ -233,7 +234,7 @@ struct TFLStatusComposeView: UIViewControllerRepresentable {
               onBackPressed: onBackPressed ?? {
               },
               enableLogging: true,
-              apiConfig: Tflstatus_coreTflApiConfig.init(
+              apiConfig: TflApiConfig(
                       appId: "your-app-id",
                       appKey: "your-api-key"
               )
@@ -316,8 +317,8 @@ fun AppNavigation() {
         }
         
         composable("tfl_status") {
-            TflStatusUI(onBackPressed = { 
-                navController.popBackStack() 
+           tflStatusUI(onBackPressed = {
+           navController.popBackStack() 
             })
         }
     }
@@ -335,7 +336,7 @@ fun CustomThemedTFL() {
         colorScheme = yourCustomColorScheme,
         typography = yourCustomTypography
     ) {
-        TflStatusUI(onBackPressed = { /* handle back */ })
+       tflStatusUI(onBackPressed = { /* handle back */ })
     }
 }
 ```
@@ -355,7 +356,7 @@ fun CustomTFLScreen(viewModel: TubeStatusViewModel = koinInject()) {
     
     when (val state = uiState) {
         is TubeStatusUiState.Loading -> LoadingScreen()
-        is TubeStatusUiState.Success -> CustomLineList(state.lineStatuses)
+       is TubeStatusUiState.Success -> CustomLineList(state.tubeLines)
         is TubeStatusUiState.Error -> ErrorScreen(state.message)
     }
 }
