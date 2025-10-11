@@ -388,7 +388,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Transport for London** for providing the public API
 - **JetBrains** for Kotlin Multiplatform and Compose Multiplatform
 - **Koin** for dependency injection framework
-- **Ktor** for HTTP client implementation
 
 ## Support
 
