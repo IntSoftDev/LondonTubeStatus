@@ -1,12 +1,14 @@
 # London Tube Status - Kotlin Multiplatform Library
 
+> 🧩 Real-time London Underground status for **Android & iOS** — built with **Kotlin Multiplatform** and **Compose Multiplatform**.
+
+
 [![Maven Central](https://img.shields.io/maven-central/v/com.intsoftdev/tflstatus-core)](https://central.sonatype.com/search?q=com.intsoftdev.tflstatus-core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Kotlin](https://img.shields.io/badge/kotlin-multiplatform-blue.svg?logo=kotlin)](http://kotlinlang.org)
 [![Compose Multiplatform](https://img.shields.io/badge/Compose-Multiplatform-blue.svg)](https://www.jetbrains.com/lp/compose-multiplatform/)
 
-A Kotlin Multiplatform library providing real-time London Underground tube line status information
-with ready-to-use UI components and business logic for Android and iOS applications.
+A Kotlin Multiplatform library providing **real-time London Underground tube line status** information with ready-to-use **UI components** and **shared business logic** for Android and iOS applications.
 
 ## Features
 
