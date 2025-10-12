@@ -362,16 +362,22 @@ fun CustomTFLScreen(viewModel: TubeStatusViewModel = koinInject()) {
 }
 ```
 
-## Demo and usage in Live apps
+## Screenshots and usage in Live apps
 
-- Android - also used in [Play store app](https://play.google.com/store/apps/details?id=com.intsoftdev.nationalrail)
-
-<img width="320" height="640" alt="AndroidScreenshot" src="https://github.com/user-attachments/assets/9d922236-0967-473f-8c67-8582cbe446f1" />
-
-- iOS - also used in [Apple App Store](https://apps.apple.com/us/app/on-rails-train-times-widget/id6464424408)
-
-<img width="320" height="691" alt="Simulator Screenshot - iPhone 16e - 2025-10-12 at 06 43 40" src="https://github.com/user-attachments/assets/fb557165-669b-4f74-ade0-eda4a0b691f1" />
-
+<table>
+  <tr>
+    <td style="text-align: center;">
+      <h3>Android</h3>
+      <p>Also used in <a href="https://play.google.com/store/apps/details?id=com.intsoftdev.nationalrail">Play Store app</a></p>
+      <img width="320" height="640" alt="AndroidScreenshot" src="https://github.com/user-attachments/assets/9d922236-0967-473f-8c67-8582cbe446f1" />
+    </td>
+    <td style="text-align: center;">
+      <h3>iOS</h3>
+      <p>Also used in <a href="https://apps.apple.com/us/app/on-rails-train-times-widget/id6464424408">Apple App Store</a></p>
+      <img width="320" height="640" alt="iOS Screenshot" src="https://github.com/user-attachments/assets/fb557165-669b-4f74-ade0-eda4a0b691f1" />
+    </td>
+  </tr>
+</table>
 
 ## Publishing
 
