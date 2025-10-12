@@ -125,6 +125,7 @@ LondonTubeStatus/
 - **[TFL API Documentation](https://api.tfl.gov.uk/)** - Official TFL API reference
 - **[Android Integration](#android-integration)** - How to integrate the library in your Android app
 - **[iOS Integration](#ios-integration)** - How to integrate the library in your SwiftUI app
+- **[Screenshots and usage in Live apps](#screenshots-and-usage-in-live-apps)** - See how it's used in action
   
 ## Quick Start
 
@@ -368,12 +369,12 @@ fun CustomTFLScreen(viewModel: TubeStatusViewModel = koinInject()) {
   <tr>
     <td style="text-align: center;">
       <h3>Android</h3>
-      <p>Also used in <a href="https://play.google.com/store/apps/details?id=com.intsoftdev.nationalrail">Play Store app</a></p>
-      <img width="320" height="640" alt="AndroidScreenshot" src="https://github.com/user-attachments/assets/9d922236-0967-473f-8c67-8582cbe446f1" />
+      <p>Used in <a href="https://play.google.com/store/apps/details?id=com.intsoftdev.nationalrail">Play Store app</a></p>
+      <img width="320" height="640" alt="AndroidScreenshot" src="https://github.com/user-attachments/assets/921bbef8-5502-414e-956b-a746e823ab7a" />
     </td>
     <td style="text-align: center;">
       <h3>iOS</h3>
-      <p>Also used in <a href="https://apps.apple.com/us/app/on-rails-train-times-widget/id6464424408">Apple App Store</a></p>
+      <p>Used in <a href="https://apps.apple.com/us/app/on-rails-train-times-widget/id6464424408">Apple App Store</a></p>
       <img width="320" height="640" alt="iOS Screenshot" src="https://github.com/user-attachments/assets/fb557165-669b-4f74-ade0-eda4a0b691f1" />
     </td>
   </tr>
