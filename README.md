@@ -364,7 +364,14 @@ fun CustomTFLScreen(viewModel: TubeStatusViewModel = koinInject()) {
 
 ## Demo and usage in Live apps
 
-- Used in our app available on [Google Play Store](https://play.google.com/store/apps/details?id=com.intsoftdev.nationalrail) and [Apple App Store](https://apps.apple.com/us/app/on-rails-train-times-widget/id6464424408)
+- Android - also used in [Play store app](https://play.google.com/store/apps/details?id=com.intsoftdev.nationalrail)
+
+<img width="320" height="640" alt="AndroidScreenshot" src="https://github.com/user-attachments/assets/9d922236-0967-473f-8c67-8582cbe446f1" />
+
+- iOS - also used in [Apple App Store](https://apps.apple.com/us/app/on-rails-train-times-widget/id6464424408)
+
+<img width="320" height="691" alt="Simulator Screenshot - iPhone 16e - 2025-10-12 at 06 43 40" src="https://github.com/user-attachments/assets/fb557165-669b-4f74-ade0-eda4a0b691f1" />
+
 
 ## Publishing
 
