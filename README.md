@@ -111,12 +111,12 @@ LondonTubeStatus/
 │       ├── commonMain/         # Shared business logic
 │       ├── androidMain/        # Android HTTP client
 │       └── iosMain/            # iOS HTTP client
-├── tflstatus-ui/              # UI components library
+├── tflstatus-ui/               # UI components library
 │   └── src/
 │       ├── commonMain/         # Compose Multiplatform UI
 │       └── ...
-├── iosApp/                    # iOS app wrapper
-└── PUBLISHING_GUIDE.md        # Library publishing documentation
+├── iosApp/                     # iOS app wrapper
+└── PUBLISHING_GUIDE.md         # Library publishing documentation
 ```
 
 ## Documentation
@@ -125,7 +125,7 @@ LondonTubeStatus/
 - **[TFL API Documentation](https://api.tfl.gov.uk/)** - Official TFL API reference
 - **[Android Integration](#android-integration)** - How to integrate the library in your Android app
 - **[iOS Integration](#ios-integration)** - How to integrate the library in your SwiftUI app
-- **[Screenshots and usage in Live apps](#screenshots-and-usage-in-live-apps)** - See how it's used in action
+- **[Screenshots and usage in Live apps](#screenshots-and-usage-in-live-apps)** - See how it looks and where it's used
   
 ## Quick Start
 
@@ -365,20 +365,10 @@ fun CustomTFLScreen(viewModel: TubeStatusViewModel = koinInject()) {
 
 ## Screenshots and usage in Live apps
 
-<table>
-  <tr>
-    <td style="text-align: center;">
-      <h3>Android</h3>
-      <p>Used in <a href="https://play.google.com/store/apps/details?id=com.intsoftdev.nationalrail">Play Store app</a></p>
-      <img width="320" height="640" alt="AndroidScreenshot" src="https://github.com/user-attachments/assets/921bbef8-5502-414e-956b-a746e823ab7a" />
-    </td>
-    <td style="text-align: center;">
-      <h3>iOS</h3>
-      <p>Used in <a href="https://apps.apple.com/us/app/on-rails-train-times-widget/id6464424408">Apple App Store</a></p>
-      <img width="320" height="640" alt="iOS Screenshot" src="https://github.com/user-attachments/assets/fb557165-669b-4f74-ade0-eda4a0b691f1" />
-    </td>
-  </tr>
-</table>
+| Android | iOS |
+|:--:|:--:|
+| Used in [Play Store app](https://play.google.com/store/apps/details?id=com.intsoftdev.nationalrail) | Used in [Apple App Store](https://apps.apple.com/us/app/on-rails-train-times-widget/id6464424408) |
+| <img src="https://github.com/user-attachments/assets/921bbef8-5502-414e-956b-a746e823ab7a" width="320" /> | <img src="https://github.com/user-attachments/assets/fb557165-669b-4f74-ade0-eda4a0b691f1" width="320" /> |
 
 ## Publishing
 
@@ -392,9 +382,9 @@ See [PUBLISHING_GUIDE.md](PUBLISHING_GUIDE.md) for detailed publishing instructi
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+2. Create a feature branch (`git checkout -b feature/<feature_name>`)
+3. Commit your changes (`git commit -m 'Add <feature>'`)
+4. Push to the branch (`git push origin feature/<feature_name>`)
 5. Open a Pull Request
 
 ## License
