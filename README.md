@@ -123,7 +123,9 @@ LondonTubeStatus/
 
 - **[Publishing Guide](PUBLISHING_GUIDE.md)** - How to publish updates to Maven Central
 - **[TFL API Documentation](https://api.tfl.gov.uk/)** - Official TFL API reference
-
+- **[Android Integration](#android-integration)** - How to integrate the library in your Android app
+- **[iOS Integration](#ios-integration)** - How to integrate the library in your SwiftUI app
+  
 ## Quick Start
 
 ### Android Integration
@@ -147,18 +149,16 @@ dependencies {
 }
 ```
 
-### Initialisation
+#### Initialisation
 
 The TFL SDK can be initialised in your Application class with various configuration options:
-
-**Android:**
 
 ```kotlin
 class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // Basic initialisation
+        // Option 1 - Basic initialisation without using API keys or Koin
         initTflSDK(context = this)
 
         // With custom API configuration
@@ -166,14 +166,55 @@ class MyApplication : Application() {
             appId = "your-app-id",
             appKey = "your-api-key"
         )
+        // Option 2 - if App does not use Koin
         initTflSDK(context = this, apiConfig = apiConfig)
 
-        // With existing Koin application
+        // Option 3 - with Koin
         val koinApp = startKoin { /* your modules */ }
-        initTflSDK(context = this, koinApplication = koinApp)
+        initTflSDK(context = this, koinApplication = koinApp, apiConfig = apiConfig)
     }
 }
 ```
+
+#### Basic usage with navigation:
+
+```kotlin
+@Composable
+fun AppNavigation() {
+    val navController = rememberNavController()
+    
+    NavHost(navController = navController, startDestination = "home") {
+        composable("home") {
+            HomeScreen(onNavigateToTFL = { 
+                navController.navigate("tfl_status") 
+            })
+        }
+        
+        composable("tfl_status") {
+           tflStatusUI(onBackPressed = {
+               navController.popBackStack() 
+            })
+        }
+    }
+}
+```
+
+#### Theming & Customization
+
+The UI library uses authentic TFL branding but can be customised:
+
+```kotlin
+@Composable
+fun CustomThemedTFL() {
+    MaterialTheme(
+        colorScheme = yourCustomColorScheme,
+        typography = yourCustomTypography
+    ) {
+         tflStatusUI(onBackPressed = { /* handle back */ })
+    }
+}
+```
+
 ### iOS Integration
 
 #### CocoaPods Setup
@@ -302,48 +343,7 @@ struct ContentView: View {
 }
 ```
 
-### Basic usage with navigation:
-
-```kotlin
-@Composable
-fun AppNavigation() {
-    val navController = rememberNavController()
-    
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
-            HomeScreen(onNavigateToTFL = { 
-                navController.navigate("tfl_status") 
-            })
-        }
-        
-        composable("tfl_status") {
-           tflStatusUI(onBackPressed = {
-           navController.popBackStack() 
-            })
-        }
-    }
-}
-```
-
-## Theming & Customization
-
-The UI library uses authentic TFL branding but can be customised:
-
-```kotlin
-@Composable
-fun CustomThemedTFL() {
-    MaterialTheme(
-        colorScheme = yourCustomColorScheme,
-        typography = yourCustomTypography
-    ) {
-       tflStatusUI(onBackPressed = { /* handle back */ })
-    }
-}
-```
-
-## Advanced Usage
-
-### Custom UI with Core Library
+## Custom UI with Core Library
 
 ```kotlin
 @Composable
@@ -356,11 +356,15 @@ fun CustomTFLScreen(viewModel: TubeStatusViewModel = koinInject()) {
     
     when (val state = uiState) {
         is TubeStatusUiState.Loading -> LoadingScreen()
-       is TubeStatusUiState.Success -> CustomLineList(state.tubeLines)
+        is TubeStatusUiState.Success -> CustomLineList(state.tubeLines)
         is TubeStatusUiState.Error -> ErrorScreen(state.message)
     }
 }
 ```
+
+## Demo and usage in Live apps
+
+- Used in our app available on [Google Play Store](https://play.google.com/store/apps/details?id=com.intsoftdev.nationalrail) and [Apple App Store](https://apps.apple.com/us/app/on-rails-train-times-widget/id6464424408)
 
 ## Publishing
 
