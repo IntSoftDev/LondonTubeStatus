@@ -22,10 +22,12 @@ internal class TFLStatusProxy(
         Napier.d("calling httpClient")
         if (appId == null || appKey == null) {
             // response might get throttled
-            return httpClient.get("$tflAPIEndPoint/Line/$lineIds/Status?detail=false")
+            return httpClient
+                .get("$tflAPIEndPoint/Line/$lineIds/Status?detail=false")
                 .body()
         }
-        return httpClient.get("$tflAPIEndPoint/Line/$lineIds/Status?detail=false&appId=$appId&appKey=$appKey")
+        return httpClient
+            .get("$tflAPIEndPoint/Line/$lineIds/Status?detail=false&appId=$appId&appKey=$appKey")
             .body()
     }
 }

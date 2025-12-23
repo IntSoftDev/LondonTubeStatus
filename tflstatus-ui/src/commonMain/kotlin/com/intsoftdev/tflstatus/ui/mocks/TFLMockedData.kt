@@ -43,8 +43,8 @@ fun tflStatusSample() {
     }
 }
 
-internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
-    return listOf(
+internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> =
+    listOf(
         TubeLineStatusUiModel(
             id = TFLLineConstants.BAKERLOO_ID,
             displayName = "Bakerloo",
@@ -170,4 +170,3 @@ internal fun getSampleTubeLineUiModels(): List<TubeLineStatusUiModel> {
             hasDisruption = true,
         ),
     )
-}

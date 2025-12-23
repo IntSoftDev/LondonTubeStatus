@@ -124,8 +124,8 @@ class TubeStatusViewModelTest {
         statusSeverity: Int,
         statusDescription: String,
         reason: String = "",
-    ): TFLStatusResponseItem {
-        return TFLStatusResponseItem(
+    ): TFLStatusResponseItem =
+        TFLStatusResponseItem(
             id = id,
             name = name,
             lineStatuses =
@@ -137,7 +137,6 @@ class TubeStatusViewModelTest {
                     ),
                 ),
         )
-    }
 
     private class FakeTFLServicesRepository(
         var successResult: List<TFLStatusResponseItem>? = null,

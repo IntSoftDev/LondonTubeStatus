@@ -13,7 +13,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class TubeStatusViewModel(private val usecase: GetTFLStatusUseCase) : ViewModel() {
+class TubeStatusViewModel(
+    private val usecase: GetTFLStatusUseCase,
+) : ViewModel() {
     private var _uiState = MutableStateFlow<TubeStatusUiState>(TubeStatusUiState.Loading)
     val uiState: StateFlow<TubeStatusUiState> =
         _uiState

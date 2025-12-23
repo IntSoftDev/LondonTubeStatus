@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.intsoftdev"
-version = "0.0.2"
+version = "0.0.3"
 
 mavenPublishing {
     // Define coordinates for the published artifact
@@ -58,8 +58,18 @@ kotlin {
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
         namespace = "com.intsoftdev.tflstatuscore"
-        compileSdk = isdlibs.versions.compileSdk.get().toInt()
-        minSdk = isdlibs.versions.minSdk.get().toInt()
+        compileSdk =
+            isdlibs
+                .versions
+                .compileSdk
+                .get()
+                .toInt()
+        minSdk =
+            isdlibs
+                .versions
+                .minSdk
+                .get()
+                .toInt()
 
         withHostTestBuilder {
         }
