@@ -16,12 +16,10 @@ fun TFLStatusResponseItem.toPresentableModel(): TubeLineStatusModel {
     )
 }
 
-fun List<TFLStatusResponseItem>.toPresentableModel(): List<TubeLineStatusModel> {
-    return this.map { it.toPresentableModel() }
-}
+fun List<TFLStatusResponseItem>.toPresentableModel(): List<TubeLineStatusModel> = this.map { it.toPresentableModel() }
 
-fun mapStatusSeverity(statusSeverity: Int): TubeLineStatusSeverity {
-    return when (statusSeverity) {
+fun mapStatusSeverity(statusSeverity: Int): TubeLineStatusSeverity =
+    when (statusSeverity) {
         10 -> TubeLineStatusSeverity.GOOD_SERVICE
         9 -> TubeLineStatusSeverity.MINOR_DELAYS
         8 -> TubeLineStatusSeverity.MINOR_DELAYS
@@ -35,7 +33,6 @@ fun mapStatusSeverity(statusSeverity: Int): TubeLineStatusSeverity {
         0 -> TubeLineStatusSeverity.SERVICE_CLOSED
         else -> TubeLineStatusSeverity.UNKNOWN
     }
-}
 
 private fun TFLStatusResponseItem.getStatusInfo(): StatusInfo {
     val status = lineStatuses.firstOrNull()
@@ -55,12 +52,10 @@ private fun TFLStatusResponseItem.getStatusInfo(): StatusInfo {
     }
 }
 
-private fun TFLStatusResponseItem.getDisruptionReason(): String? {
-    return lineStatuses.firstOrNull()?.reason?.takeIf { it.isNotEmpty() }
-}
+private fun TFLStatusResponseItem.getDisruptionReason(): String? = lineStatuses.firstOrNull()?.reason?.takeIf { it.isNotEmpty() }
 
-private fun String.formatDisplayName(): String {
-    return when (this.lowercase()) {
+private fun String.formatDisplayName(): String =
+    when (this.lowercase()) {
         "elizabeth line" -> "Elizabeth line"
         "london overground" -> "London Overground"
         "hammersmith & city" -> "Hammersmith & City"
@@ -70,7 +65,6 @@ private fun String.formatDisplayName(): String {
                 word.replaceFirstChar { it.uppercase() }
             }
     }
-}
 
 private data class StatusInfo(
     val text: String,

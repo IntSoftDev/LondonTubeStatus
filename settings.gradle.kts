@@ -32,7 +32,7 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         create("isdlibs") {
-            from("com.intsoftdev:isddependencies:1.0.0-ALPHA-27")
+            from("com.intsoftdev:isddependencies:1.0.0-ALPHA-29")
         }
     }
 }

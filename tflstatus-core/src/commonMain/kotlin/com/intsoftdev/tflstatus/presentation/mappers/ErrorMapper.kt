@@ -8,10 +8,9 @@ object ErrorMessages {
     const val UNEXPECTED_ERROR = "An unexpected error occurred. Please try again."
 }
 
-fun Throwable.toPresentableError(): String {
-    return when (this) {
+fun Throwable.toPresentableError(): String =
+    when (this) {
         is ApiException.IOException -> ErrorMessages.NETWORK_ERROR
         is ApiException.HttpError -> ErrorMessages.HTTP_ERROR
         else -> ErrorMessages.UNEXPECTED_ERROR
     }
-}

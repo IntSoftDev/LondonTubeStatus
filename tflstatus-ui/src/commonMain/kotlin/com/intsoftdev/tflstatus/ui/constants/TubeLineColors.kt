@@ -48,8 +48,8 @@ object TubeLineColors {
     /**
      * Get the appropriate color scheme for a tube line based on its name
      */
-    fun getLineColorScheme(lineName: String): LineColorScheme {
-        return when (lineName.lowercase()) {
+    fun getLineColorScheme(lineName: String): LineColorScheme =
+        when (lineName.lowercase()) {
             TFLLineConstants.BAKERLOO_ID -> LineColorScheme(LineColors.Bakerloo, TextColors.White)
             TFLLineConstants.CIRCLE_ID -> LineColorScheme(LineColors.Circle, TextColors.Black)
             TFLLineConstants.CENTRAL_ID -> LineColorScheme(LineColors.Central, TextColors.White)
@@ -65,11 +65,26 @@ object TubeLineColors {
                     LineColors.HammersmithCity,
                     TextColors.Black,
                 )
+
             TFLLineConstants.JUBILEE_ID -> LineColorScheme(LineColors.Jubilee, TextColors.White)
-            TFLLineConstants.METROPOLITAN_ID -> LineColorScheme(LineColors.Metropolitan, TextColors.White)
-            TFLLineConstants.NORTHERN_ID -> LineColorScheme(LineColors.Northern, TextColors.White)
-            TFLLineConstants.PICCADILLY_ID -> LineColorScheme(LineColors.Piccadilly, TextColors.White)
-            TFLLineConstants.VICTORIA_ID -> LineColorScheme(LineColors.Victoria, TextColors.White)
+            TFLLineConstants.METROPOLITAN_ID ->
+                LineColorScheme(
+                    LineColors.Metropolitan,
+                    TextColors.White,
+                )
+
+            TFLLineConstants.NORTHERN_ID ->
+                LineColorScheme(LineColors.Northern, TextColors.White)
+
+            TFLLineConstants.PICCADILLY_ID ->
+                LineColorScheme(
+                    LineColors.Piccadilly,
+                    TextColors.White,
+                )
+
+            TFLLineConstants.VICTORIA_ID ->
+                LineColorScheme(LineColors.Victoria, TextColors.White)
+
             TFLLineConstants.WATERLOO_CITY_ID, "waterloo & city" ->
                 LineColorScheme(
                     LineColors.WaterlooCity,
@@ -81,7 +96,7 @@ object TubeLineColors {
                     LineColors.LondonOverground,
                     TextColors.White,
                 )
+
             else -> LineColorScheme(LineColors.Default, TextColors.White)
         }
-    }
 }

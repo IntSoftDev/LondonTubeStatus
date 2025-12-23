@@ -71,12 +71,27 @@ kotlin {
 
 android {
     namespace = "com.intsoftdev.londontubestatus"
-    compileSdk = isdlibs.versions.compileSdk.get().toInt()
+    compileSdk =
+        isdlibs
+            .versions
+            .compileSdk
+            .get()
+            .toInt()
 
     defaultConfig {
         applicationId = "com.intsoftdev.londontubestatus"
-        minSdk = isdlibs.versions.minSdk.get().toInt()
-        targetSdk = isdlibs.versions.targetSdk.get().toInt()
+        minSdk =
+            isdlibs
+                .versions
+                .minSdk
+                .get()
+                .toInt()
+        targetSdk =
+            isdlibs
+                .versions
+                .targetSdk
+                .get()
+                .toInt()
         versionCode = 1
         versionName = "1.0"
 
