@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'tflstatus_ui'
-    spec.version                  = '0.0.2'
+    spec.version                  = '0.0.4'
     spec.homepage                 = 'https://github.com/IntSoftDev/LondonTubeStatus'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
